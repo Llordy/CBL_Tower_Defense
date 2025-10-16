@@ -34,7 +34,7 @@ public class WaveHandler {
                 this.enemies.add(
                     i,
                     new Enemy(
-                        "Images/enemy.png",
+                        "/main/Images/enemy.png",
                         50,
                         50,
                         30,

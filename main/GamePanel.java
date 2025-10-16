@@ -47,7 +47,12 @@ public class GamePanel extends JPanel implements Runnable {
         Entity background = new Entity();
         background.position = new Vector(screenWidth / 2, screenHeight / 2);
         try {
-            background.setBufferedImage("Images/CBL_background.png", screenWidth, screenHeight);
+            background.setBufferedImage(
+                "/main/Images/CBL_background.png",
+                screenWidth,
+                screenHeight
+            );
+
         } catch (IOException e) {
             e.printStackTrace();
         }

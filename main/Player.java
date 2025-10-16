@@ -18,7 +18,7 @@ public class Player extends HealthEntity implements ActionListener {
         this.position = position;
         this.speed = speed;
         try {
-            setBufferedImage("Images/builderBoi.png", width, height);
+            setBufferedImage("/main/Images/builderBoi.png", width, height);
         } catch (Exception e) {
             System.out.println("couldnt render image error PLAYER");
         }

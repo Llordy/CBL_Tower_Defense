@@ -15,6 +15,7 @@ public class Entity {
 
     /**sets the image. */
     public void setBufferedImage(String pathName, int width, int height) throws IOException {
+        
         this.image = ImageIO.read(getClass().getResourceAsStream(pathName));
         setImageSize(width, height);
     }
