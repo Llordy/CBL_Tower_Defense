@@ -41,6 +41,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     //PAINTCOMPONENT
     ArrayList<Enemy> savedEnemies;
+
+    //GAME STATES
+    public int gameState;
+    public final int menuState = 0;
+    public final int playState = 1;
+    public final int pauseState = 2;
     
     /**initializes the background. */
     public Entity setBackground() {
@@ -76,6 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     /**starts the game loop. */
     public void startGameThread() {
 
+        gameState = playState;
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -134,6 +141,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     /**paints a test rectangle. */
+    @Override
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
