@@ -1,0 +1,34 @@
+package main;
+
+/**interface for handling health and damage. */
+public abstract class HealthEntity extends Entity {
+    
+    int maxHealth;
+    int health;
+
+    /**takes damage. */
+    public void damage(int amount) {
+        System.out.println(this);
+
+        this.health -= amount;
+        if (this.health < 0) {
+            this.health = 0;
+        }
+
+        if (this.health == 0) {
+            System.out.println("this scrub died: " + this);
+            this.die();
+        }
+    }
+
+    /**heal amount. */
+    public void heal(int amount) {
+        this.health += amount;
+
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+    }
+
+    abstract void die();
+}
