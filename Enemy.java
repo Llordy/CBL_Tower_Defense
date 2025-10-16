@@ -4,7 +4,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**default class for each enemy.
+/**default class for each enemy. 
+ * test 1
  */
 public class Enemy extends HealthEntity {
     
