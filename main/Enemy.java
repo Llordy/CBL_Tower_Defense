@@ -85,4 +85,10 @@ public class Enemy extends HealthEntity {
     public void die() {
         //TODO: delete the enemy
     }
+
+    @Override
+    void addDeathListener(DeathListener toAdd) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addDeathListener'");
+    }
 }

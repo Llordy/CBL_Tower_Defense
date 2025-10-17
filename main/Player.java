@@ -1,14 +1,15 @@
 package main;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /** the player, should only be 1 of. */
-public class Player extends HealthEntity implements ActionListener {
+public class Player extends HealthEntity {
 
     int money = 0;
     double speed;
     KeyHandler keyHandler;
+
+    public ArrayList<DeathListener> listeners = new ArrayList<DeathListener>();
 
     /**constructor. */
     public Player(Vector position, float speed, int width, int height, int health) {
@@ -59,15 +60,21 @@ public class Player extends HealthEntity implements ActionListener {
         checkBoundaries(position);
     }
 
-    /**you die, skill issue. */
+    /**you die, skill issue.
+     * will call gamepanel, which in turn handles the deathscreen and such.
+    */
+    @Override
     void die() {
-        System.out.println("man im dead");
-        //TODO: death screen etc
+        for (DeathListener listener : listeners) {
+            listener.EntityDied("Player", 0);
+        }
     }
 
+    /**
+     * adds a listener to be called up death.
+     */
     @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+    void addDeathListener(DeathListener toAdd) {
+        listeners.add(toAdd);
     }
 }

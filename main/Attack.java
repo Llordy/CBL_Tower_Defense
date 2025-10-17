@@ -27,11 +27,8 @@ public class Attack {
     public void perform(HealthEntity target) {
 
         if (!onCooldown) {
-
-            System.out.println("pew");
             
             target.damage(damage);
-
             onCooldown = true;
 
             //TODO: animate

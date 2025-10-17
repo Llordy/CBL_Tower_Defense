@@ -8,7 +8,6 @@ public abstract class HealthEntity extends Entity {
 
     /**takes damage. */
     public void damage(int amount) {
-        System.out.println(this);
 
         this.health -= amount;
         if (this.health < 0) {
@@ -16,7 +15,6 @@ public abstract class HealthEntity extends Entity {
         }
 
         if (this.health == 0) {
-            System.out.println("this scrub died: " + this);
             this.die();
         }
     }
@@ -31,4 +29,6 @@ public abstract class HealthEntity extends Entity {
     }
 
     abstract void die();
+
+    abstract void addDeathListener(DeathListener toAdd);
 }
