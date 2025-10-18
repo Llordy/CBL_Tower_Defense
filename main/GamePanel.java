@@ -20,12 +20,16 @@ public class GamePanel extends JPanel implements Runnable {
     public final int originalTileSize = 32; // 32x32 tiles
     public final int screenWidth = 600;
     public final int screenHeight = 800;
+    public final Vector screenCenter = new Vector(screenWidth / 2, screenHeight / 2);
     KeyHandler keyHandler = new KeyHandler(this);
     Thread gameThread;
 
     //BACKGROUND
     Entity background = setBackground();
     
+    //UI
+    UI userInterface = new UI(this);
+
 
     //ENTITY AND OBJECT
     Player player = new Player(
@@ -162,6 +166,7 @@ public class GamePanel extends JPanel implements Runnable {
         for (Enemy enemy : savedEnemies) {
             enemy.draw(g2);
         }
+        userInterface.draw(g2);
 
         g2.dispose();
     }
