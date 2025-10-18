@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int originalTileSize = 32; // 32x32 tiles
     public final int screenWidth = 600;
     public final int screenHeight = 800;
-    KeyHandler keyHandler = new KeyHandler();
+    KeyHandler keyHandler = new KeyHandler(this);
     Thread gameThread;
 
     //BACKGROUND
@@ -123,21 +123,27 @@ public class GamePanel extends JPanel implements Runnable {
     /**updates the game every frame. */
     public void update(double delta) {
 
-        //PLAYER
-        player.update(delta);
+        if (gameState == playState) {
+            //PLAYER
+            player.update(delta);
 
-        //ENEMIES
-        for (Enemy enemy : enemies) {
-            enemy.update(delta, turrets, player);
+            //ENEMIES
+            for (Enemy enemy : enemies) {
+                enemy.update(delta, turrets, player);
+            }
+
+            //TURRETS
+            for (Turret turret : turrets) {
+                turret.update(delta, enemies);
+            }
+
+            //WAVEHANDLER
+            enemies.addAll(waveHandler.run(delta));
         }
 
-        //TURRETS
-        for (Turret turret : turrets) {
-            turret.update(delta, enemies);
+        if (gameState == pauseState) {
+            //nothing
         }
-
-        //WAVEHANDLER
-        enemies.addAll(waveHandler.run(delta));
     }
 
     /**paints a test rectangle. */

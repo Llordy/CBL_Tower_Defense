@@ -6,11 +6,16 @@ import java.awt.event.KeyListener;
 /**handles the key inputs. */
 public class KeyHandler implements KeyListener {
 
+    GamePanel gamePanel;
     public boolean upPressed = false;
     public boolean downPressed = false;
     public boolean leftPressed = false;
     public boolean rightPressed = false;
     public boolean ePressed = false;
+
+    public KeyHandler(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -38,6 +43,15 @@ public class KeyHandler implements KeyListener {
 
         if (code == KeyEvent.VK_E) {
             ePressed = true;
+        }
+
+        if (code == KeyEvent.VK_ESCAPE) {
+            if (gamePanel.gameState == gamePanel.playState) {
+                gamePanel.gameState = gamePanel.pauseState;
+            }
+            else if (gamePanel.gameState == gamePanel.pauseState) {
+                gamePanel.gameState = gamePanel.playState;
+            }
         }
     }
 
