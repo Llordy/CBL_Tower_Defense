@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.io.IOException;
 
-
+/**Handles and draws all User Interface related content. */
 public class UI {
     
     GamePanel gamePanel;
@@ -13,7 +13,7 @@ public class UI {
     Font fontArialPlain;
     Entity menuImage = new Entity();
 
-
+    /**Constructor to include the gamePanel for g2 and screen size variations. */
     public UI(GamePanel parameterGamePanel) {
         this.gamePanel = parameterGamePanel;
 
@@ -22,13 +22,18 @@ public class UI {
 
         //IMAGES
         try {
-            menuImage.setBufferedImage("/main/Images/menu.png", gamePanel.screenWidth, gamePanel.screenHeight);
+            menuImage.setBufferedImage(
+                "/main/Images/menu.png", 
+                gamePanel.screenWidth, 
+                gamePanel.screenHeight
+            );
         } catch (IOException e) {
             System.out.println("couldnt render image error UI/MENUIMAGE");
         }
         menuImage.position = gamePanel.screenCenter;
 
     }
+
     /**Draws UI elements based off gamePanel.gameState. */
     public void draw(Graphics2D g2) {
 
@@ -48,6 +53,7 @@ public class UI {
         }
     }
 
+    /**Draws UI for playState gameState. */
     public void drawPlayScreen() {
 
         //TODO: DRAW UI FOR PLAYSTATE INCLUDING WAVE COUNTER AND PLAYER HEALTH
@@ -56,16 +62,21 @@ public class UI {
         g2.drawString(waveCounterText, 0, 80);
     }
 
+    /**Draws UI for pauseState gameState. */
     public void drawPauseScreen() {
 
         String text = "PAUSED";
         int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 
 
-        g2.drawString(text, Math.round(gamePanel.screenCenter.x - textWidth / 2),
-                             Math.round(gamePanel.screenCenter.y));
+        g2.drawString(
+            text, 
+            Math.round(gamePanel.screenCenter.x - textWidth / 2),
+            Math.round(gamePanel.screenCenter.y)
+        );
     }
 
+    /**Draws UI for menuState gameState. */
     public void drawMenuScreen() {
 
         String text = "Play";
