@@ -38,8 +38,8 @@ public class GamePanel extends JPanel implements Runnable, DeathListener {
         40,
         10
     );
-    ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-    ArrayList<Turret> turrets = new ArrayList<Turret>();
+    ArrayList<Enemy> enemies = new ArrayList<>();
+    ArrayList<Turret> turrets = new ArrayList<>();
     WaveHandler waveHandler = new WaveHandler(player);
 
     //PAINTCOMPONENT
@@ -50,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable, DeathListener {
     public final int menuState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int endState = 3;
     
     /**initializes the background. */
     public Entity setBackground() {
@@ -85,13 +86,13 @@ public class GamePanel extends JPanel implements Runnable, DeathListener {
     /**starts the game loop. */
     public void startGameThread() {
 
-        gameState = playState;
         gameThread = new Thread(this);
         gameThread.start();
     }
 
     public void startupCode() {
         player.addDeathListener(this);
+        gameState = menuState;
     }
 
     /**DO NOT TOUCH, this runs the entire delta time system. */
@@ -177,23 +178,27 @@ public class GamePanel extends JPanel implements Runnable, DeathListener {
     @Override
     public void EntityDied(String classID, int index) {
 
-        switch(classID) {
-            case "Player":
-            System.out.println("player died");
-            //TODO: death screen
-            break;
+        switch (classID) {
+            case "Player" -> {
+                System.out.println("player died");
+                gameState = endState;
+            }
 
-            case "Turret":
+            case "Turret" -> {
 
-            turrets.get(index);
-            turrets.remove(index);
-            break;
+                turrets.get(index);
+                turrets.remove(index);
+            }
 
-            case "Enemy":
+            case "Enemy" -> {
 
-            enemies.get(index);
-            enemies.remove(index);
-            break;
+                enemies.get(index);
+                enemies.remove(index);
+            }
+
+            default -> {
+                System.out.println(classID + " is an unknown entity that has died");
+            }
         }
     }
 }

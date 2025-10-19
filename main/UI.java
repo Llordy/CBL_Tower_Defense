@@ -3,6 +3,10 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 
 public class UI {
@@ -10,13 +14,23 @@ public class UI {
     GamePanel gamePanel;
     Graphics2D g2;
     Font fontArialPlain;
-
+    BufferedImage menuImage = null;
 
 
     public UI(GamePanel parameterGamePanel) {
         this.gamePanel = parameterGamePanel;
 
+        //FONTS
         fontArialPlain = new Font("Arial", Font.BOLD, 80);
+
+        //IMAGES
+
+        try {
+            menuImage = ImageIO.read(new File("/main/Images/menu.png"));
+        } catch (IOException e) {
+            System.out.println("couldnt render image error UI/MENUIMAGE");
+        }
+
     }
 
     public void draw(Graphics2D g2) {
@@ -50,5 +64,9 @@ public class UI {
 
         g2.drawString(text, Math.round(gamePanel.screenCenter.x - textLength / 2),
                              Math.round(gamePanel.screenCenter.y));
+    }
+
+    public void drawMenuScreen() {
+        g2.drawImage(menuImage, 0, 0, null);
     }
 }
