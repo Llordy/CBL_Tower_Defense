@@ -3,10 +3,7 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 
 
 public class UI {
@@ -14,7 +11,7 @@ public class UI {
     GamePanel gamePanel;
     Graphics2D g2;
     Font fontArialPlain;
-    BufferedImage menuImage = null;
+    Entity menuImage = new Entity();
 
 
     public UI(GamePanel parameterGamePanel) {
@@ -24,16 +21,17 @@ public class UI {
         fontArialPlain = new Font("Arial", Font.BOLD, 80);
 
         //IMAGES
-
         try {
-            menuImage = ImageIO.read(new File("/main/Images/menu.png"));
+            menuImage.setBufferedImage("/main/Images/menu.png", gamePanel.screenWidth, gamePanel.screenHeight);
         } catch (IOException e) {
             System.out.println("couldnt render image error UI/MENUIMAGE");
         }
+        menuImage.position = gamePanel.screenCenter;
 
     }
-
+    /**Draws UI elements based off gamePanel.gameState. */
     public void draw(Graphics2D g2) {
+
         this.g2 = g2;
 
         g2.setFont(fontArialPlain);
@@ -46,11 +44,12 @@ public class UI {
             drawPauseScreen();
         }
         if (gamePanel.gameState == gamePanel.menuState) {
-            //TODO: DRAW UI FOR MAIN MENU
+            drawMenuScreen();
         }
     }
 
     public void drawPlayScreen() {
+
         //TODO: DRAW UI FOR PLAYSTATE INCLUDING WAVE COUNTER AND PLAYER HEALTH
         String waveCounterText = "Wave: " + gamePanel.waveHandler.waves.size();
 
@@ -58,15 +57,22 @@ public class UI {
     }
 
     public void drawPauseScreen() {
+
         String text = "PAUSED";
-        int textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 
 
-        g2.drawString(text, Math.round(gamePanel.screenCenter.x - textLength / 2),
+        g2.drawString(text, Math.round(gamePanel.screenCenter.x - textWidth / 2),
                              Math.round(gamePanel.screenCenter.y));
     }
 
     public void drawMenuScreen() {
-        g2.drawImage(menuImage, 0, 0, null);
+
+        String text = "Play";
+        int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+
+        menuImage.draw(this.g2);
+        g2.drawString(text, Math.round(gamePanel.screenCenter.x - textWidth / 2),
+                             Math.round(gamePanel.screenCenter.y));
     }
 }
