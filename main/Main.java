@@ -13,6 +13,7 @@ public class Main {
         window.setTitle("the game is wow");
 
         GamePanel gamePanel = new GamePanel();
+        gamePanel.startupCode(); //just so certain code can be ran before main loop
         window.add(gamePanel);
 
         window.pack();

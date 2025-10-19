@@ -61,4 +61,10 @@ public class Turret extends HealthEntity {
         // TODO turret go kaboom
         throw new UnsupportedOperationException("Unimplemented method 'die'");
     }
+
+    @Override
+    void addDeathListener(DeathListener toAdd) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addDeathListener'");
+    }
 }

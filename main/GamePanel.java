@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**The big file, from here the game is run. */
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel implements Runnable, DeathListener {
 
     //FPS
     double maxFPS = 60.0d;
     double minFrameTime = 1d / maxFPS;
-
 
     //SYSTEM
     public final int originalTileSize = 32; // 32x32 tiles
@@ -89,6 +88,10 @@ public class GamePanel extends JPanel implements Runnable {
         gameState = playState;
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public void startupCode() {
+        player.addDeathListener(this);
     }
 
     /**DO NOT TOUCH, this runs the entire delta time system. */
@@ -169,5 +172,28 @@ public class GamePanel extends JPanel implements Runnable {
         userInterface.draw(g2);
 
         g2.dispose();
+    }
+
+    @Override
+    public void EntityDied(String classID, int index) {
+
+        switch(classID) {
+            case "Player":
+            System.out.println("player died");
+            //TODO: death screen
+            break;
+
+            case "Turret":
+
+            turrets.get(index);
+            turrets.remove(index);
+            break;
+
+            case "Enemy":
+
+            enemies.get(index);
+            enemies.remove(index);
+            break;
+        }
     }
 }
