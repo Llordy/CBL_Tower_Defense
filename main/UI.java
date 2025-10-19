@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.io.IOException;
 
-/**Handles and draws all User Interface related content. */
+/**Handles and draws all User Interface and Overlay related content. */
 public class UI {
     
     GamePanel gamePanel;
@@ -18,7 +18,7 @@ public class UI {
         this.gamePanel = parameterGamePanel;
 
         //FONTS
-        fontArialPlain = new Font("Arial", Font.BOLD, 80);
+        fontArialPlain = new Font("Arial", Font.BOLD, 50);
 
         //IMAGES
         try {
@@ -51,6 +51,9 @@ public class UI {
         if (gamePanel.gameState == gamePanel.menuState) {
             drawMenuScreen();
         }
+        if (gamePanel.gameState == gamePanel.endState) {
+            drawEndScreen();
+        }
     }
 
     /**Draws UI for playState gameState. */
@@ -59,7 +62,7 @@ public class UI {
         //TODO: DRAW UI FOR PLAYSTATE INCLUDING WAVE COUNTER AND PLAYER HEALTH
         String waveCounterText = "Wave: " + gamePanel.waveHandler.waves.size();
 
-        g2.drawString(waveCounterText, 0, 80);
+        g2.drawString(waveCounterText, 30, 50);
     }
 
     /**Draws UI for pauseState gameState. */
@@ -79,7 +82,18 @@ public class UI {
     /**Draws UI for menuState gameState. */
     public void drawMenuScreen() {
 
-        String text = "Play";
+        String text = "Press [Space] to Play!";
+        int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+
+        menuImage.draw(this.g2);
+        g2.drawString(text, Math.round(gamePanel.screenCenter.x - textWidth / 2),
+                             Math.round(gamePanel.screenCenter.y));
+    }
+
+    /**Draws UI for endScreen gameState or in other words, when player dies. */
+    //TODO: CREATE DEATH SCREEN FOR PLAYER
+    public void drawEndScreen() {
+        String text = "You died! Game Over";
         int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 
         menuImage.draw(this.g2);

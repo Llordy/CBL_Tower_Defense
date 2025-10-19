@@ -53,6 +53,12 @@ public class KeyHandler implements KeyListener {
                 gamePanel.gameState = gamePanel.playState;
             }
         }
+
+        if (code == KeyEvent.VK_SPACE) {
+            if (gamePanel.gameState == gamePanel.menuState) {
+                gamePanel.gameState = gamePanel.playState;
+            }
+        }
     }
 
     @Override
