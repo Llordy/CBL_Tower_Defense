@@ -39,8 +39,6 @@ public class Enemy extends HealthEntity {
             }
         }
 
-        System.out.println(minTarget);
-
         return minTarget;
     }
 

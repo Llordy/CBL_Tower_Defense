@@ -37,7 +37,7 @@ public class GamePanel extends JPanel
         150,
         40,
         40,
-        10,
+        100,
         this
     );
     HashSet<Enemy> enemies = new HashSet<>();

@@ -38,7 +38,7 @@ public class WaveHandler {
                         50,
                         50,
                         30,
-                        new Attack(10, 100, 1)
+                        new Attack(10, 30, 1)
                     )
                 );
             }
