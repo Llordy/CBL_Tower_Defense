@@ -10,7 +10,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("the game is wow");
+        window.setTitle("Tower Defense");
 
         GamePanel gamePanel = new GamePanel();
         gamePanel.startupCode(); //just so certain code can be ran before main loop
