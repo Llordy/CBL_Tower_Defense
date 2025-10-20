@@ -10,6 +10,7 @@ public class WaveHandler {
     Player player;
     boolean startingWave = true;
     Stack<Wave> waves;
+    int waveCounter = 0;
 
     //TODO: implement different enemy types?
 
@@ -67,6 +68,7 @@ public class WaveHandler {
     /**spawns in enemies and starts the wave. */
     public ArrayList<Enemy> startWave(Wave wave) {
 
+        waveCounter++;
         player.money += wave.income;
 
         for (Enemy enemy : wave.enemies) {
