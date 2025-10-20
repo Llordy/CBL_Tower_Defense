@@ -11,6 +11,12 @@ public class Vector {
         this.y = y;
     }
 
+    /**constructor. */
+    Vector(Vector vector) {
+        this.x = vector.x;
+        this.y = vector.y;
+    }
+
     /**a + b. */
     public Vector add(Vector a) {
         return new Vector(

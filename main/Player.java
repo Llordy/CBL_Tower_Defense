@@ -1,6 +1,6 @@
 package main;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 /** the player, should only be 1 of. */
 public class Player extends HealthEntity {
@@ -8,16 +8,59 @@ public class Player extends HealthEntity {
     int money = 0;
     double speed;
     KeyHandler keyHandler;
+    Hand hand = new Hand();
+    GamePanel gamePanel;
 
-    public ArrayList<DeathListener> listeners = new ArrayList<DeathListener>();
+    
+
+    /**describes all the actions the player does. */
+    private class Hand {
+
+        boolean handsFull = false;
+        private Turret currentHeldTurret;
+        int ammoCounter;
+
+        /**places currently held turret at position. */
+        public void placeTurret(Vector position) {
+            handsFull = false;
+            currentHeldTurret.position = new Vector(position);
+            
+            gamePanel.turrets.add(currentHeldTurret);
+            
+            currentHeldTurret = null;
+        }
+
+        /**sets held turret. */
+        public void grabTurret(Turret turret) {
+            handsFull = true;
+            currentHeldTurret = turret;
+        }
+
+        /**returns currently held turret. */
+        public Turret getTurret() {
+            if (handsFull) {
+                return currentHeldTurret;
+            } else {
+                return null;
+            }
+        }
+    }
 
     /**constructor. */
-    public Player(Vector position, float speed, int width, int height, int health) {
-
+    public Player(
+        Vector position,
+        float speed,
+        int width,
+        int height,
+        int health,
+        GamePanel gamePanel
+    ) {
+        this.gamePanel = gamePanel;
         this.health = health;
         this.maxHealth = health;
         this.position = position;
         this.speed = speed;
+
         try {
             setBufferedImage("/main/Images/builderBoi.png", width, height);
         } catch (Exception e) {
@@ -47,6 +90,23 @@ public class Player extends HealthEntity {
             movement.x += displacement;
         }
 
+        if (keyHandler.ePressed) {
+
+            if (position.y > 700) {
+                hand.grabTurret(new Turret(
+                    new Attack[0],
+                    0,
+                    70,
+                    70,
+                    new HashSet<HealthEntity>(0)
+                ));
+            }
+
+            if (hand.currentHeldTurret != null) {
+                hand.placeTurret(this.position);
+            }
+        }
+
         //remove diagonal boost
         if (!(movement.y == 0 || movement.x == 0)) {
 
@@ -65,8 +125,8 @@ public class Player extends HealthEntity {
     */
     @Override
     void die() {
-        for (DeathListener listener : listeners) {
-            listener.EntityDied("Player", 0);
+        for (DeathListener listener : deathListeners) {
+            listener.entityDied("Player", this);
         }
     }
 
@@ -75,6 +135,6 @@ public class Player extends HealthEntity {
      */
     @Override
     void addDeathListener(DeathListener toAdd) {
-        listeners.add(toAdd);
+        deathListeners.add(toAdd);
     }
 }

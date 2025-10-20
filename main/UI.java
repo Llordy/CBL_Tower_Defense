@@ -23,8 +23,8 @@ public class UI {
         //IMAGES
         try {
             menuImage.setBufferedImage(
-                "/main/Images/menu.png", 
-                gamePanel.screenWidth, 
+                "/main/Images/menu.png",
+                gamePanel.screenWidth,
                 gamePanel.screenHeight
             );
         } catch (IOException e) {

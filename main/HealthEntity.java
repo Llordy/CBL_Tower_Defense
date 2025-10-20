@@ -1,10 +1,14 @@
 package main;
 
+import java.util.HashSet;
+
 /**interface for handling health and damage. */
 public abstract class HealthEntity extends Entity {
     
     int maxHealth;
     int health;
+
+    public HashSet<DeathListener> deathListeners = new HashSet<DeathListener>();
 
     /**takes damage. */
     public void damage(int amount) {

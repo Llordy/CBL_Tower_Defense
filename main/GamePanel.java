@@ -5,11 +5,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import javax.swing.JPanel;
 
 /**The big file, from here the game is run. */
-public class GamePanel extends JPanel implements Runnable, DeathListener {
+public class GamePanel extends JPanel 
+    implements Runnable, DeathListener {
 
     //FPS
     double maxFPS = 60.0d;
@@ -36,14 +37,16 @@ public class GamePanel extends JPanel implements Runnable, DeathListener {
         150,
         40,
         40,
-        10
+        10,
+        this
     );
-    ArrayList<Enemy> enemies = new ArrayList<>();
-    ArrayList<Turret> turrets = new ArrayList<>();
+    HashSet<Enemy> enemies = new HashSet<>();
+    HashSet<Turret> turrets = new HashSet<>();
     WaveHandler waveHandler = new WaveHandler(player);
 
     //PAINTCOMPONENT
-    ArrayList<Enemy> savedEnemies;
+    HashSet<Enemy> savedEnemies;
+    HashSet<Turret> savedTurrets;
 
     //GAME STATES
     public int gameState;
@@ -90,6 +93,9 @@ public class GamePanel extends JPanel implements Runnable, DeathListener {
         gameThread.start();
     }
 
+    /**
+     * runs once on startup.
+     */
     public void startupCode() {
         player.addDeathListener(this);
         gameState = menuState;
@@ -142,7 +148,7 @@ public class GamePanel extends JPanel implements Runnable, DeathListener {
 
             //TURRETS
             for (Turret turret : turrets) {
-                turret.update(delta, enemies);
+                turret.update(delta, new HashSet<HealthEntity>(enemies));
             }
 
             //WAVEHANDLER
@@ -161,22 +167,33 @@ public class GamePanel extends JPanel implements Runnable, DeathListener {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-        
+
+        //Background
         background.draw(g2);
-        player.draw(g2);
 
+        //Enemies
         savedEnemies = enemies;
-
         for (Enemy enemy : savedEnemies) {
             enemy.draw(g2);
         }
+
+        //Turrets
+        savedTurrets = turrets;
+        for (Turret turret : savedTurrets) {
+            turret.draw(g2);
+        }
+
+        //Player
+        player.draw(g2);
+
+        //UI
         userInterface.draw(g2);
 
         g2.dispose();
     }
 
     @Override
-    public void EntityDied(String classID, int index) {
+    public void entityDied(String classID, Entity deadEntity) {
 
         switch (classID) {
             case "Player" -> {
@@ -185,15 +202,11 @@ public class GamePanel extends JPanel implements Runnable, DeathListener {
             }
 
             case "Turret" -> {
-
-                turrets.get(index);
-                turrets.remove(index);
+                turrets.remove(deadEntity);
             }
 
             case "Enemy" -> {
-
-                enemies.get(index);
-                enemies.remove(index);
+                enemies.remove(deadEntity);
             }
 
             default -> {

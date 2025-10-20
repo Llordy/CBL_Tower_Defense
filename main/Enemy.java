@@ -1,18 +1,13 @@
 package main;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
 
-/**default class for each enemy. 
- * test 1
- */
+/**default class for each enemy. */
 public class Enemy extends HealthEntity {
-    
-    BufferedImage image;
+
     double speed;
     HealthEntity currentTarget;
-    ArrayList<HealthEntity> savedTargets;
+    HashSet<HealthEntity> savedTargets;
     Attack attack;
 
     /**constructor. */
@@ -28,28 +23,31 @@ public class Enemy extends HealthEntity {
     }
 
     /**returns the priority target.
-     * currently distances based
+     * currently distance based
     */
-    private HealthEntity decideTarget(Collection<HealthEntity> healthEntities) {
+    private HealthEntity decideTarget(HashSet<HealthEntity> healthEntities) {
         
-        int minDistance = 1000000;
+        double minDistance = 1000000d;
         HealthEntity minTarget = null;
 
         for (HealthEntity target : healthEntities) {
 
             if (this.distanceTo(target) < minDistance) {
 
+                minDistance = this.distanceTo(target);
                 minTarget = target;
             }
         }
+
+        System.out.println(minTarget);
 
         return minTarget;
     }
 
     /**updates every frame. */
-    public void update(double delta, ArrayList<Turret> turrets, Player player) {
+    public void update(double delta, HashSet<Turret> turrets, Player player) {
 
-        savedTargets = new ArrayList<HealthEntity>(turrets);
+        savedTargets = new HashSet<HealthEntity>(turrets);
         savedTargets.add(player);
 
         currentTarget = decideTarget(savedTargets);
@@ -82,13 +80,15 @@ public class Enemy extends HealthEntity {
         }
     }
 
+    /**enemy dies. */
     public void die() {
-        //TODO: delete the enemy
+        for (DeathListener listener : deathListeners) {
+            listener.entityDied("Enemy", this);
+        }
     }
 
     @Override
     void addDeathListener(DeathListener toAdd) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addDeathListener'");
+        deathListeners.add(toAdd);
     }
 }

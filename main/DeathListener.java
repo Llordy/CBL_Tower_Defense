@@ -1,5 +1,6 @@
 package main;
 
+/**event for when an entity dies. */
 public interface DeathListener {
-    void EntityDied(String classID, int index);
+    void entityDied(String classID, Entity deadEntity);
 }

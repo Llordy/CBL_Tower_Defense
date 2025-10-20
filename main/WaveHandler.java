@@ -1,6 +1,6 @@
 package main;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Stack;
 
 /**handles the wave system. */
@@ -17,13 +17,13 @@ public class WaveHandler {
     /**the class describing a wave of enemies. */
     class Wave {
 
-        ArrayList<Enemy> enemies;
+        HashSet<Enemy> enemies;
         int income;
 
         /**initializes a wave filled with defaultLad.*/
         Wave(int waveSize, int income) {
 
-            this.enemies = new ArrayList<Enemy>(waveSize);
+            this.enemies = new HashSet<Enemy>(waveSize);
             this.income = income;
 
             if (waveSize == 0) {
@@ -33,7 +33,6 @@ public class WaveHandler {
             for (int i = 0; i < waveSize; i++) {
 
                 this.enemies.add(
-                    i,
                     new Enemy(
                         "/main/Images/enemy.png",
                         50,
@@ -66,7 +65,7 @@ public class WaveHandler {
     }
 
     /**spawns in enemies and starts the wave. */
-    public ArrayList<Enemy> startWave(Wave wave) {
+    public HashSet<Enemy> startWave(Wave wave) {
 
         waveCounter++;
         player.money += wave.income;
@@ -79,14 +78,14 @@ public class WaveHandler {
     }
         
 
-    public ArrayList<Enemy> run(double delta) {
+    public HashSet<Enemy> run(double delta) {
         if (startingWave) {
             currentWave = waves.pop();
             player.money += currentWave.income;
             startingWave = false;
             return startWave(currentWave);
         } else {
-            return new ArrayList<Enemy>(0);
+            return new HashSet<Enemy>(0);
         }
     }
 }

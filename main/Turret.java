@@ -1,26 +1,32 @@
 package main;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 /**class describing all turrets. */
 public class Turret extends HealthEntity {
 
     int cost;
     Attack[] attacks;
-    ArrayList<HealthEntity> targets;
+    HashSet<HealthEntity> targets;
 
     /**constructor. */
-    Turret(Attack[] attacks, int cost, ArrayList<HealthEntity> targets) {
+    Turret(Attack[] attacks, int cost, int width, int height, HashSet<HealthEntity> targets) {
 
         this.attacks = attacks;
         this.cost = cost;
         this.targets = targets;
+
+        try {
+            setBufferedImage("/main/Images/placeholderTurret.png", width, height);
+        } catch (Exception e) {
+            System.out.println("couldnt render image error TURRET");
+        }
     }
 
     /**decides the best target for the given attack. */
-    private HealthEntity getTarget(Attack attack, ArrayList<HealthEntity> possibleTargets) {
+    private HealthEntity getTarget(Attack attack, HashSet<HealthEntity> possibleTargets) {
         
-        HealthEntity maxTarget = targets.get(0);
+        HealthEntity maxTarget = null;
         float maxHeat = getHeat(maxTarget);
         
 
@@ -52,19 +58,23 @@ public class Turret extends HealthEntity {
         }
     }
 
-    public void update(double delta, ArrayList<Enemy> enemies) {
+    /**updates every frame. */
+    public void update(double delta, HashSet<HealthEntity> targets) {
+        this.targets = targets;
         attack();
     }
 
     @Override
     void die() {
         // TODO turret go kaboom
-        throw new UnsupportedOperationException("Unimplemented method 'die'");
+        
+        for (DeathListener listener : deathListeners) {
+            listener.entityDied("Turret", this);
+        }
     }
 
     @Override
     void addDeathListener(DeathListener toAdd) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addDeathListener'");
+        deathListeners.add(toAdd);
     }
 }
