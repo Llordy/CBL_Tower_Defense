@@ -1,24 +1,22 @@
 package main;
 
-import java.util.HashSet;
-
 /** the player, should only be 1 of. */
 public class Player extends HealthEntity {
 
-    int money = 0;
+    int money = 10;
     double speed;
     KeyHandler keyHandler;
     Hand hand = new Hand();
     GamePanel gamePanel;
+    int armoryY;
 
     
 
     /**describes all the actions the player does. */
-    private class Hand {
+    public class Hand {
 
         boolean handsFull = false;
         private Turret currentHeldTurret;
-        int ammoCounter;
 
         /**places currently held turret at position. */
         public void placeTurret(Vector position) {
@@ -92,18 +90,10 @@ public class Player extends HealthEntity {
 
         if (keyHandler.ePressed) {
 
-            if (position.y > 700) {
-                hand.grabTurret(new Turret(
-                    new Attack[0],
-                    0,
-                    70,
-                    70,
-                    new HashSet<HealthEntity>(0)
-                ));
-            }
-
             if (hand.currentHeldTurret != null) {
                 hand.placeTurret(this.position);
+            } else if (position.y > armoryY) {
+                gamePanel.armory.buyTurret(0);
             }
         }
 

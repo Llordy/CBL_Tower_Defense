@@ -43,6 +43,7 @@ public class GamePanel extends JPanel
     HashSet<Enemy> enemies = new HashSet<>();
     HashSet<Turret> turrets = new HashSet<>();
     WaveHandler waveHandler = new WaveHandler(player);
+    Armory armory = new Armory(player, this);
 
     //PAINTCOMPONENT
     HashSet<Enemy> savedEnemies;
@@ -98,6 +99,7 @@ public class GamePanel extends JPanel
      */
     public void startupCode() {
         player.addDeathListener(this);
+        player.armoryY = screenHeight - armory.height;
         gameState = menuState;
     }
 

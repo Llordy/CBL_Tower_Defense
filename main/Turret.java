@@ -10,8 +10,16 @@ public class Turret extends HealthEntity {
     HashSet<HealthEntity> targets;
 
     /**constructor. */
-    Turret(Attack[] attacks, int cost, int width, int height, HashSet<HealthEntity> targets) {
-
+    Turret(
+        Attack[] attacks,
+        int health,
+        int cost,
+        int width,
+        int height,
+        HashSet<HealthEntity> targets
+    ) {
+        this.health = health;
+        this.maxHealth = health;
         this.attacks = attacks;
         this.cost = cost;
         this.targets = targets;

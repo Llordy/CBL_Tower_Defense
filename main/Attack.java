@@ -26,7 +26,12 @@ public class Attack {
     /**performs the attack on the given target. */
     public void perform(HealthEntity target) {
 
+        if (target == null) {
+            return;
+        }
+
         if (!onCooldown) {
+            System.out.println("attacking " + target);
             
             target.damage(damage);
             onCooldown = true;
