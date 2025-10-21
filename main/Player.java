@@ -1,5 +1,10 @@
 package main;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 /** the player, should only be 1 of. */
 public class Player extends HealthEntity {
 
@@ -9,6 +14,8 @@ public class Player extends HealthEntity {
     Hand hand = new Hand();
     GamePanel gamePanel;
     int armoryY;
+    boolean canHandleTurret = true;
+    int turretHandleDelayMillis = 100;
 
     
 
@@ -90,10 +97,22 @@ public class Player extends HealthEntity {
 
         if (keyHandler.ePressed) {
 
-            if (hand.currentHeldTurret != null) {
-                hand.placeTurret(this.position);
-            } else if (position.y > armoryY) {
-                gamePanel.armory.buyTurret(0);
+            if (canHandleTurret) {
+                canHandleTurret = false;
+
+                if (hand.currentHeldTurret != null) {
+                    hand.placeTurret(this.position);
+
+                } else if (position.y > armoryY) {
+                    gamePanel.armory.buyTurret(0);
+                }
+                
+                ActionListener taskPerformer = new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        canHandleTurret = true;
+                    }
+                };
+                new Timer(turretHandleDelayMillis, taskPerformer).start();
             }
         }
 

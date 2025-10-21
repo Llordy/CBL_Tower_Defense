@@ -7,7 +7,7 @@ import java.util.HashSet;
 public class Armory {
 
     int height = 200;
-    ArrayList<Turret> inventory = new ArrayList<Turret>();
+    ArrayList<DisplayTurret> inventory = new ArrayList<>();
     Player player;
     GamePanel gamePanel;
 
@@ -16,25 +16,42 @@ public class Armory {
 
         this.player = player;
         this.gamePanel = gamePanel;
-        addTurret(
-            new Turret(
-                new Attack[] {new Attack(10, 50, 1)},
-                100,
-                3,
-                70,
-                70,
-                new HashSet<HealthEntity>(gamePanel.enemies)
-            )
+
+        Turret turret = new Turret(
+            new Attack[] {new Attack(10, 50, 1)},
+            100,
+            3,
+            70,
+            70,
+            new HashSet<HealthEntity>(gamePanel.enemies)
         );
+
+        addTurret(new DisplayTurret(turret, turret.imagePathName));
     }
 
-    private void addTurret(Turret turret) {
-        inventory.add(turret);
+    private class DisplayTurret extends Entity {
+
+        Turret turret;
+
+        DisplayTurret(Turret turret, String imagePathName) {
+
+            this.turret = turret;
+            try {
+                setBufferedImage(imagePathName, turret.width, turret.height);
+            } catch (Exception e) {
+                System.out.println("couldnt render image error DISPLAYTURRET");
+            }
+        }
+    }
+
+    private void addTurret(DisplayTurret displayTurret) {
+        inventory.add(displayTurret);
     }
 
     /**ran every end of wave. */
     public void restock(int waveIndex) {
 
+        DisplayTurret displayTurret;
         Turret turret;
 
         for (int i = 0; i < Math.sqrt(waveIndex); i++) {
@@ -47,8 +64,10 @@ public class Armory {
                 70,
                 new HashSet<HealthEntity>(gamePanel.enemies)
             );
+
+            displayTurret = new DisplayTurret(turret, turret.imagePathName);
             
-            addTurret(turret);
+            addTurret(displayTurret);
         }
     }
 
@@ -59,7 +78,7 @@ public class Armory {
             return;
         }
 
-        Turret turret = inventory.get(index);
+        Turret turret = inventory.get(index).turret;
 
         if (player.money < turret.cost) {
             return;
@@ -71,6 +90,6 @@ public class Armory {
         player.money -= turret.cost;
         player.hand.grabTurret(turret);
 
-        inventory.remove(turret);
+        inventory.remove(index);
     }
 }

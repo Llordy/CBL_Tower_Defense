@@ -60,7 +60,7 @@ public class UI {
     public void drawPlayScreen() {
 
         //TODO: DRAW UI FOR PLAYSTATE INCLUDING WAVE COUNTER AND PLAYER HEALTH
-        String waveCounterText = "Wave: " + gamePanel.waveHandler.waves.size();
+        String waveCounterText = "Wave: " + gamePanel.waveHandler.waveCounter;
 
         g2.drawString(waveCounterText, 30, 50);
     }

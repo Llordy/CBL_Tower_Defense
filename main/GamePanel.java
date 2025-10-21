@@ -140,6 +140,12 @@ public class GamePanel extends JPanel
     public void update(double delta) {
 
         if (gameState == playState) {
+
+            //System.out.println("placed turrets: " + turrets.size());
+            //System.out.println("turrets in armory: " + armory.inventory.size());
+            //System.out.println("money: " + player.money);
+            //System.out.println();
+
             //PLAYER
             player.update(delta);
 

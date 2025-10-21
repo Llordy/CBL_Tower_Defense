@@ -12,9 +12,12 @@ public class Entity {
     private BufferedImage image;
     public int width;
     public int height;
+    public String imagePathName;
 
     /**sets the image. */
     public void setBufferedImage(String pathName, int width, int height) throws IOException {
+
+        imagePathName = pathName;
         
         this.image = ImageIO.read(getClass().getResourceAsStream(pathName));
         setImageSize(width, height);

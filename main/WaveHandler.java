@@ -67,8 +67,12 @@ public class WaveHandler {
     /**spawns in enemies and starts the wave. */
     public HashSet<Enemy> startWave(Wave wave) {
 
+        System.out.println("weewoo wave starting " + waveCounter);
+
         waveCounter++;
         player.money += wave.income;
+
+        System.out.println(waveCounter);
 
         for (Enemy enemy : wave.enemies) {
             enemy.position = new Vector(600 * Math.random(), 10);
@@ -79,11 +83,16 @@ public class WaveHandler {
         
 
     public HashSet<Enemy> run(double delta) {
+
+        System.out.println(waveCounter);
+
         if (startingWave) {
             currentWave = waves.pop();
             player.money += currentWave.income;
             startingWave = false;
+            
             return startWave(currentWave);
+
         } else {
             return new HashSet<Enemy>(0);
         }
