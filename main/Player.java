@@ -1,10 +1,5 @@
 package main;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
-
 /** the player, should only be 1 of. */
 public class Player extends HealthEntity {
 
@@ -30,6 +25,7 @@ public class Player extends HealthEntity {
             handsFull = false;
             currentHeldTurret.position = new Vector(position);
             
+            currentHeldTurret.addDeathListener(gamePanel);
             gamePanel.turrets.add(currentHeldTurret);
             
             currentHeldTurret = null;
@@ -76,9 +72,29 @@ public class Player extends HealthEntity {
     /**moves the player based on delta and current keys pressed. */
     public void update(double delta) {
 
-        //movement
+        updatePosition(delta);
+
+        if (keyHandler.ePressed) {
+
+            if (position.y < armoryY) { //OUTSIDE ARMORY
+                
+                if (hand.handsFull) {
+                    hand.placeTurret(this.position);
+
+                }
+
+            } else { //INSIDE ARMORY
+                
+                gamePanel.armory.buyTurret(position.x);
+            }
+        }
+    }
+
+    private void updatePosition(double delta) {
+
         Vector movement = new Vector(0, 0);
         double displacement = speed * delta;
+
         if (keyHandler.upPressed) {
             movement.y -= displacement;
         }
@@ -93,27 +109,6 @@ public class Player extends HealthEntity {
 
         if (keyHandler.rightPressed) {
             movement.x += displacement;
-        }
-
-        if (keyHandler.ePressed) {
-
-            if (canHandleTurret) {
-                canHandleTurret = false;
-
-                if (hand.currentHeldTurret != null) {
-                    hand.placeTurret(this.position);
-
-                } else if (position.y > armoryY) {
-                    gamePanel.armory.buyTurret(0);
-                }
-                
-                ActionListener taskPerformer = new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        canHandleTurret = true;
-                    }
-                };
-                new Timer(turretHandleDelayMillis, taskPerformer).start();
-            }
         }
 
         //remove diagonal boost

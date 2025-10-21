@@ -8,7 +8,7 @@ public class WaveHandler {
 
     Wave currentWave;
     Player player;
-    boolean startingWave = true;
+    GamePanel gamePanel;
     Stack<Wave> waves;
     int waveCounter = 0;
 
@@ -32,69 +32,39 @@ public class WaveHandler {
 
             for (int i = 0; i < waveSize; i++) {
 
-                this.enemies.add(
-                    new Enemy(
-                        "/main/Images/enemy.png",
-                        50,
-                        50,
-                        30,
-                        new Attack(10, 30, 1)
-                    )
-                );
+                Enemy newEnemy = new EnemyGrunt();
+                newEnemy.addDeathListener(gamePanel);
+                this.enemies.add(newEnemy);
             }
         }
     }
 
     /**sets defaultLad and the waves. */
-    WaveHandler(Player player) {
+    WaveHandler(Player player, GamePanel gamePanel) {
 
+        this.gamePanel = gamePanel;
         this.player = player;
-        waves = new Stack<Wave>();
+    }
 
-        
-
-        int[] waveSizes = {3, 6, 10};
-
-        //initializes the waves
-        
-        for (int i = waveSizes.length - 1; i >= 0; i--) {
-
-            Wave newWave = new Wave(waveSizes[i], i);
-            waves.add(newWave);
-        }
+    private Wave getWave(int waveIndex) {
+        return new Wave(
+            waveIndex * 3,
+            waveIndex
+            );
     }
 
     /**spawns in enemies and starts the wave. */
-    public HashSet<Enemy> startWave(Wave wave) {
-
-        System.out.println("weewoo wave starting " + waveCounter);
+    public HashSet<Enemy> startWave() {
 
         waveCounter++;
-        player.money += wave.income;
+        currentWave = getWave(waveCounter);
+        
+        player.money += currentWave.income;
 
-        System.out.println(waveCounter);
-
-        for (Enemy enemy : wave.enemies) {
+        for (Enemy enemy : currentWave.enemies) {
             enemy.position = new Vector(600 * Math.random(), 10);
         }
 
-        return wave.enemies;
-    }
-        
-
-    public HashSet<Enemy> run(double delta) {
-
-        System.out.println(waveCounter);
-
-        if (startingWave) {
-            currentWave = waves.pop();
-            player.money += currentWave.income;
-            startingWave = false;
-            
-            return startWave(currentWave);
-
-        } else {
-            return new HashSet<Enemy>(0);
-        }
+        return currentWave.enemies;
     }
 }

@@ -1,13 +1,14 @@
 package main;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 /**armory at bottom of the screen. */
 public class Armory {
 
-    int height = 200;
-    ArrayList<DisplayTurret> inventory = new ArrayList<>();
+    final int height = 130;
+    private ArrayList<DisplayTurret> inventory = new ArrayList<>();
     Player player;
     GamePanel gamePanel;
 
@@ -16,17 +17,6 @@ public class Armory {
 
         this.player = player;
         this.gamePanel = gamePanel;
-
-        Turret turret = new Turret(
-            new Attack[] {new Attack(10, 50, 1)},
-            100,
-            3,
-            70,
-            70,
-            new HashSet<HealthEntity>(gamePanel.enemies)
-        );
-
-        addTurret(new DisplayTurret(turret, turret.imagePathName));
     }
 
     private class DisplayTurret extends Entity {
@@ -44,20 +34,75 @@ public class Armory {
         }
     }
 
-    private void addTurret(DisplayTurret displayTurret) {
-        inventory.add(displayTurret);
+    private void addTurret(DisplayTurret newDisplayTurret) {
+        inventory.add(newDisplayTurret);
+        newDisplayTurret.position = new Vector(0, 0); //to avoid errors from null vector
+
+        int screenWidth = gamePanel.screenWidth;
+        int chunkSize = screenWidth / inventory.size();
+
+        //set X of position
+        for (int i = 0; i < inventory.size(); i++) {
+            inventory.get(i).position.x = 0.5 * chunkSize + i * chunkSize;
+        }
+
+        //set Y of position
+        newDisplayTurret.position.y = gamePanel.screenHeight - height * 0.5;
+    }
+
+    private void removeTurret(int index) {
+        inventory.remove(index);
+
+        if (inventory.size() == 0) {
+            return;
+        }
+
+        int screenWidth = gamePanel.screenWidth;
+        int chunkSize = screenWidth / inventory.size();
+
+        //shift X positions
+        for (int i = 0; i < inventory.size(); i++) {
+            inventory.get(i).position.x = 0.5 * chunkSize + i * chunkSize;
+        }
     }
 
     /**ran every end of wave. */
     public void restock(int waveIndex) {
 
-        DisplayTurret displayTurret;
-        Turret turret;
-
         for (int i = 0; i < Math.sqrt(waveIndex); i++) {
+            addJeb();
+        }
+    }
 
-            turret = new Turret(
-                new Attack[] {new Attack(10, 50, 1)},
+    /**have the player buy a turret. */
+    public void buyTurret(double posX) {
+
+        if (inventory.size() == 0 || player.hand.handsFull) {
+            return;
+        }
+
+        //divides the armory up into horizontal chunks for each
+        int x = (int) (long) Math.round(posX);
+        int screenWidth = gamePanel.screenWidth;
+        int chunkSize = screenWidth / inventory.size();
+        int index = (x - (x % chunkSize)) / chunkSize;
+
+        Turret turret = inventory.get(index).turret;
+
+        if (player.money < turret.cost) {
+            return;
+        }
+
+        player.money -= turret.cost;
+        player.hand.grabTurret(turret);
+
+        removeTurret(index);
+    }
+
+    /**semi-placeholder for a simple turret. */
+    public void addJeb() {
+        Turret jeb = new Turret(
+                new Attack[] {new Attack(10, 50, 1000)},
                 100,
                 3,
                 70,
@@ -65,31 +110,16 @@ public class Armory {
                 new HashSet<HealthEntity>(gamePanel.enemies)
             );
 
-            displayTurret = new DisplayTurret(turret, turret.imagePathName);
+        DisplayTurret displayJeb = new DisplayTurret(jeb, jeb.imagePathName);
             
-            addTurret(displayTurret);
-        }
+        addTurret(displayJeb);
     }
 
-    /**have the player buy a turret. */
-    public void buyTurret(int index) {
+    /**draws the displayturrets on screen. */
+    public void draw(Graphics2D g2) {
 
-        if (inventory.size() == 0) {
-            return;
+        for (DisplayTurret displayTurret : inventory) {
+            displayTurret.draw(g2);
         }
-
-        Turret turret = inventory.get(index).turret;
-
-        if (player.money < turret.cost) {
-            return;
-        }
-        if (player.hand.handsFull) {
-            return;
-        }
-
-        player.money -= turret.cost;
-        player.hand.grabTurret(turret);
-
-        inventory.remove(index);
     }
 }

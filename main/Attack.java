@@ -15,12 +15,11 @@ public class Attack {
     boolean onCooldown = false;
 
     /**constructor, firerate is attacks per second. */
-    Attack(int damage, int range, int firerate) {
+    Attack(int damage, int range, int fireDelay) {
 
         this.damage = damage;
         this.range = range;
-        this.firerate = firerate;
-        this.fireDelay = Math.round((float) 1000.0d / firerate);
+        this.fireDelay = fireDelay;
     }
 
     /**performs the attack on the given target. */
@@ -31,19 +30,22 @@ public class Attack {
         }
 
         if (!onCooldown) {
-            System.out.println("attacking " + target);
             
             target.damage(damage);
             onCooldown = true;
 
             //TODO: animate
 
+            //cooldown timer
             ActionListener taskPerformer = new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     onCooldown = false;
                 }
             };
-            new Timer(fireDelay, taskPerformer).start();
+            Timer timer = new Timer(fireDelay, taskPerformer);
+            timer.setRepeats(false);
+            timer.start();
+            
         }
     }
 }

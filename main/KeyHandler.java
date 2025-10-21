@@ -46,10 +46,11 @@ public class KeyHandler implements KeyListener {
         }
 
         if (code == KeyEvent.VK_ESCAPE) {
+
             if (gamePanel.gameState == gamePanel.playState) {
                 gamePanel.gameState = gamePanel.pauseState;
-            }
-            else if (gamePanel.gameState == gamePanel.pauseState) {
+
+            } else if (gamePanel.gameState == gamePanel.pauseState) {
                 gamePanel.gameState = gamePanel.playState;
             }
         }
@@ -85,6 +86,4 @@ public class KeyHandler implements KeyListener {
             ePressed = false;
         }
     }
-
-
 }

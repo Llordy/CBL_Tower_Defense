@@ -19,7 +19,6 @@ public abstract class HealthEntity extends Entity {
         }
 
         if (this.health == 0) {
-            System.out.print(this + " is dead");
             this.die();
         }
     }

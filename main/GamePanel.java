@@ -42,7 +42,7 @@ public class GamePanel extends JPanel
     );
     HashSet<Enemy> enemies = new HashSet<>();
     HashSet<Turret> turrets = new HashSet<>();
-    WaveHandler waveHandler = new WaveHandler(player);
+    WaveHandler waveHandler = new WaveHandler(player, this);
     Armory armory = new Armory(player, this);
 
     //PAINTCOMPONENT
@@ -141,15 +141,14 @@ public class GamePanel extends JPanel
 
         if (gameState == playState) {
 
-            //System.out.println("placed turrets: " + turrets.size());
-            //System.out.println("turrets in armory: " + armory.inventory.size());
-            //System.out.println("money: " + player.money);
-            //System.out.println();
-
             //PLAYER
             player.update(delta);
 
             //ENEMIES
+            if (enemies.size() == 0) {
+                enemies.addAll(waveHandler.startWave());
+                armory.restock(waveHandler.waveCounter);
+            }
             for (Enemy enemy : enemies) {
                 enemy.update(delta, turrets, player);
             }
@@ -158,9 +157,6 @@ public class GamePanel extends JPanel
             for (Turret turret : turrets) {
                 turret.update(delta, new HashSet<HealthEntity>(enemies));
             }
-
-            //WAVEHANDLER
-            enemies.addAll(waveHandler.run(delta));
         }
 
         if (gameState == pauseState) {
@@ -191,6 +187,9 @@ public class GamePanel extends JPanel
             turret.draw(g2);
         }
 
+        //Armory
+        armory.draw(g2);
+
         //Player
         player.draw(g2);
 
@@ -210,6 +209,7 @@ public class GamePanel extends JPanel
             }
 
             case "Turret" -> {
+                System.out.println("turret died");
                 turrets.remove(deadEntity);
             }
 

@@ -35,8 +35,7 @@ public class Turret extends HealthEntity {
     private HealthEntity getTarget(Attack attack, HashSet<HealthEntity> possibleTargets) {
         
         HealthEntity maxTarget = null;
-        float maxHeat = getHeat(maxTarget);
-        
+        double maxHeat = 0d;
 
         for (HealthEntity target : targets) {
 
@@ -50,15 +49,15 @@ public class Turret extends HealthEntity {
         return maxTarget;
     }
 
-    private float getHeat(HealthEntity target) {
-        return 0.0f;
+    private double getHeat(HealthEntity target) {
+        return 100 / distanceTo(target);
         //TODO: calculate the heat
     }
 
 
     /**tries to attack with all its attacks. */
     private void attack() {
-
+        
         for (Attack attack : attacks) {
 
             attack.perform(getTarget(attack, targets));

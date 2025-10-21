@@ -11,7 +11,7 @@ public class Enemy extends HealthEntity {
     Attack attack;
 
     /**constructor. */
-    Enemy(String pathName, int width, int height, double speed, Attack attack) {
+    Enemy(String pathName, int width, int height, double speed, int health, Attack attack) {
         try {
             setBufferedImage(pathName, width, height);
         } catch (Exception e) {
@@ -20,6 +20,7 @@ public class Enemy extends HealthEntity {
         
         this.speed = speed;
         this.attack = attack;
+        this.health = health;
     }
 
     /**returns the priority target.
