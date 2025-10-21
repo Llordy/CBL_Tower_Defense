@@ -13,5 +13,4 @@ public class EnemyGrunt extends Enemy {
             new Attack(10, 10, 1000)
         );
     }
-
 }
