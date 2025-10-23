@@ -83,8 +83,6 @@ public class GamePanel extends JPanel
         this.addKeyListener(keyHandler);
         player.keyHandler = keyHandler;
         this.setFocusable(true);
-
-        //player.setBufferedImage(builderBoi);
     }
 
     /**starts the game loop. */
@@ -208,12 +206,10 @@ public class GamePanel extends JPanel
 
         switch (classID) {
             case "Player" -> {
-                System.out.println("player died");
                 gameState = endState;
             }
 
             case "Turret" -> {
-                System.out.println("turret died");
                 turrets.remove(deadEntity);
             }
 

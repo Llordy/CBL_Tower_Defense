@@ -58,9 +58,18 @@ public class Turret extends HealthEntity {
     /**tries to attack with all its attacks. */
     private void attack() {
         
+        HealthEntity target;
+        
         for (Attack attack : attacks) {
 
-            attack.perform(position, getTarget(attack, targets));
+            target = getTarget(attack, targets);
+
+            if (attack.range < this.distanceTo(target)) {
+                continue;
+            }
+
+            attack.perform(position, target);
+            
             //TODO: fix targeting and gather targets
         }
     }

@@ -102,7 +102,7 @@ public class Armory {
     /**semi-placeholder for a simple turret. */
     public void addJeb() {
         Turret jeb = new Turret(
-                new Attack[] {new Attack(10, 50, 1000)},
+                new Attack[] {new Attack(40, 200, 1000)},
                 100,
                 3,
                 70,

@@ -9,3 +9,9 @@ wavenumber(no meaning, just readability) enemyTypeAmount income
 enemyType enemyAmount
 enemyType enemyAmount
 enemyType enemyAmount
+
+TURRET:
+
+name health cost width height attackAmount
+damage range firedelay
+damage range firedelay

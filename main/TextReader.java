@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import main.WaveHandler.Wave;
 
-public class WaveSetter {
+public class TextReader {
 
     /**read the enemies from Enemies.txt */
     public HashMap<String, Enemy> readEnemies(BufferedReader bufferedReader) {
@@ -46,11 +46,8 @@ public class WaveSetter {
 
             bufferedReader.close();
         } catch (Exception e) {
-            System.out.println("readEnemies" + e);
-
-            for (int i = 0; i < e.getStackTrace().length; i++) {
-                System.out.println(e.getStackTrace()[i]);
-            }
+            System.out.println("readEnemies");
+            e.printStackTrace();
         }
 
         return enemyTypes;
@@ -92,11 +89,8 @@ public class WaveSetter {
 
             bufferedReader.close();
         } catch (Exception e) {
-            System.out.println("readWaves " + e);
-
-            for (int i = 0; i < e.getStackTrace().length; i++) {
-                System.out.println(e.getStackTrace()[i]);
-            }
+            System.out.println("readWaves ");
+            e.printStackTrace();
         }
 
         return waves;
@@ -124,8 +118,6 @@ public class WaveSetter {
                 for (int j = 0; j < amount; j++) {
                     outputEnemies.add(enemy.getCopy());
                 }
-
-                System.out.println(amount);
             }
             
         } catch (Exception e) {
@@ -135,8 +127,6 @@ public class WaveSetter {
                 System.out.println(e.getStackTrace()[i]);
             }
         }
-
-        System.out.println(outputEnemies.size());
         return outputEnemies;
     }
 }

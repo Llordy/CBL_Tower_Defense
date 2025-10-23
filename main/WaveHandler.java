@@ -13,7 +13,7 @@ public class WaveHandler {
     Player player;
     GamePanel gamePanel;
     int waveCounter = 0;
-    WaveSetter waveSetter = new WaveSetter();
+    TextReader textReader = new TextReader();
 
     HashMap<String, Enemy> enemyTypes = new HashMap<>();
     ArrayList<Wave> waves = new ArrayList<>();
@@ -44,19 +44,16 @@ public class WaveHandler {
             BufferedReader bufferedReader = new BufferedReader(
                 new FileReader("main\\text\\Enemies.txt")
             );
-            enemyTypes = waveSetter.readEnemies(bufferedReader);
+            enemyTypes = textReader.readEnemies(bufferedReader);
 
             bufferedReader = new BufferedReader(
                 new FileReader("main\\text\\Waves.txt")
             );
-            waves = waveSetter.readWaves(bufferedReader, enemyTypes, this);
+            waves = textReader.readWaves(bufferedReader, enemyTypes, this);
 
         } catch (Exception e) {
-            System.out.println("WaveHandler " + e);
-
-            for (int i = 0; i < e.getStackTrace().length; i++) {
-                System.out.println(e.getStackTrace()[i]);
-            }
+            System.out.println("WaveHandler ");
+            e.printStackTrace();
         }
     }
 
@@ -66,12 +63,19 @@ public class WaveHandler {
     public HashSet<Enemy> startWave() {
 
         waveCounter++;
+        if (waveCounter >= waves.size()) {
+
+            //TODO: win the game
+            gamePanel.gameState = 3; //endstate
+            return new HashSet<>();
+        }
         currentWave = waves.get(waveCounter);
         
         player.money += currentWave.income;
 
         for (Enemy enemy : currentWave.enemies) {
             enemy.position = new Vector(600 * Math.random(), 10);
+            enemy.addDeathListener(gamePanel);
         }
 
         return currentWave.enemies;
