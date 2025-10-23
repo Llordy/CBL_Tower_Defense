@@ -124,7 +124,7 @@ public class Player extends HealthEntity {
         checkBoundaries(position);
     }
 
-    /**you die, skill issue.
+    /**you die.
      * will call gamepanel, which in turn handles the deathscreen and such.
     */
     @Override

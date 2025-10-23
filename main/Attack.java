@@ -9,7 +9,6 @@ public class Attack {
 
     int damage;
     double range;
-    int firerate;
     private int fireDelay; //millis
 
     boolean onCooldown = false;
@@ -23,7 +22,7 @@ public class Attack {
     }
 
     /**performs the attack on the given target. */
-    public void perform(HealthEntity target) {
+    public void perform(Vector origin, HealthEntity target) {
 
         if (target == null) {
             return;
@@ -34,7 +33,7 @@ public class Attack {
             target.damage(damage);
             onCooldown = true;
 
-            //TODO: animate
+            animate(origin, target);
 
             //cooldown timer
             ActionListener taskPerformer = new ActionListener() {
@@ -45,7 +44,10 @@ public class Attack {
             Timer timer = new Timer(fireDelay, taskPerformer);
             timer.setRepeats(false);
             timer.start();
-            
         }
+    }
+
+    private void animate(Vector origin, HealthEntity target) {
+        //TODO: add attack animation
     }
 }

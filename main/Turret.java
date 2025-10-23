@@ -60,7 +60,7 @@ public class Turret extends HealthEntity {
         
         for (Attack attack : attacks) {
 
-            attack.perform(getTarget(attack, targets));
+            attack.perform(position, getTarget(attack, targets));
             //TODO: fix targeting and gather targets
         }
     }
