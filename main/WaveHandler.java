@@ -1,7 +1,10 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Stack;
 
 /**handles the wave system. */
 public class WaveHandler {
@@ -9,33 +12,25 @@ public class WaveHandler {
     Wave currentWave;
     Player player;
     GamePanel gamePanel;
-    Stack<Wave> waves;
     int waveCounter = 0;
+    WaveSetter waveSetter = new WaveSetter();
+
+    HashMap<String, Enemy> enemyTypes = new HashMap<>();
+    ArrayList<Wave> waves = new ArrayList<>();
 
     //TODO: implement different enemy types?
 
     /**the class describing a wave of enemies. */
-    class Wave {
+    public class Wave {
 
         HashSet<Enemy> enemies;
         int income;
 
         /**initializes a wave filled with defaultLad.*/
-        Wave(int waveSize, int income) {
+        Wave(HashSet<Enemy> enemies, int income) {
 
-            this.enemies = new HashSet<Enemy>(waveSize);
+            this.enemies = enemies;
             this.income = income;
-
-            if (waveSize == 0) {
-                return;
-            }
-
-            for (int i = 0; i < waveSize; i++) {
-
-                Enemy newEnemy = new EnemyGrunt();
-                newEnemy.addDeathListener(gamePanel);
-                this.enemies.add(newEnemy);
-            }
         }
     }
 
@@ -44,20 +39,34 @@ public class WaveHandler {
 
         this.gamePanel = gamePanel;
         this.player = player;
+
+        try {
+            BufferedReader bufferedReader = new BufferedReader(
+                new FileReader("main\\text\\Enemies.txt")
+            );
+            enemyTypes = waveSetter.readEnemies(bufferedReader);
+
+            bufferedReader = new BufferedReader(
+                new FileReader("main\\text\\Waves.txt")
+            );
+            waves = waveSetter.readWaves(bufferedReader, enemyTypes, this);
+
+        } catch (Exception e) {
+            System.out.println("WaveHandler " + e);
+
+            for (int i = 0; i < e.getStackTrace().length; i++) {
+                System.out.println(e.getStackTrace()[i]);
+            }
+        }
     }
 
-    private Wave getWave(int waveIndex) {
-        return new Wave(
-            waveIndex * 3,
-            waveIndex
-            );
-    }
+    
 
     /**spawns in enemies and starts the wave. */
     public HashSet<Enemy> startWave() {
 
         waveCounter++;
-        currentWave = getWave(waveCounter);
+        currentWave = waves.get(waveCounter);
         
         player.money += currentWave.income;
 

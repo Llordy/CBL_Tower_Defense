@@ -15,7 +15,13 @@ public class Enemy extends HealthEntity {
         try {
             setBufferedImage(pathName, width, height);
         } catch (Exception e) {
-            System.out.println("couldnt render image error ENEMY");
+            System.out.println("Enemy " + e);
+            System.out.println(pathName);
+
+            for (int i = 0; i < e.getStackTrace().length; i++) {
+                System.out.println(e.getStackTrace()[i]);
+            }
+            System.out.println();
         }
         
         this.speed = speed;
@@ -57,7 +63,7 @@ public class Enemy extends HealthEntity {
 
         if (this.distanceTo(currentTarget) <= attack.range) {
 
-            attack.perform(currentTarget);
+            attack.perform(position, currentTarget);
         }
     }
 
@@ -79,6 +85,11 @@ public class Enemy extends HealthEntity {
         }
     }
 
+    public Enemy getCopy() {
+        Enemy newEnemy = new Enemy(imagePathName, width, height, speed, health, attack);
+        return newEnemy;
+    }
+    
     /**enemy dies. */
     public void die() {
         for (DeathListener listener : deathListeners) {

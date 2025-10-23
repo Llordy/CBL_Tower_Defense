@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 import javax.swing.JPanel;
@@ -60,9 +62,17 @@ public class GamePanel extends JPanel
     public Entity setBackground() {
         Entity background = new Entity();
         background.position = new Vector(screenWidth / 2, screenHeight / 2);
+        
+        //String pathName = "/main/Images/CBL_background.png";
+        //System.out.println(pathName);
         try {
+            
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("main\\text\\background.txt"));
+            String pathName = bufferedReader.readLine();
+            bufferedReader.close();
+            
             background.setBufferedImage(
-                "/main/Images/CBL_background.png",
+                pathName,
                 screenWidth,
                 screenHeight
             );
@@ -83,8 +93,6 @@ public class GamePanel extends JPanel
         this.addKeyListener(keyHandler);
         player.keyHandler = keyHandler;
         this.setFocusable(true);
-
-        //player.setBufferedImage(builderBoi);
     }
 
     /**starts the game loop. */
