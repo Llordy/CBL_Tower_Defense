@@ -192,6 +192,10 @@ public class GamePanel extends JPanel
 
         //Player
         player.draw(g2);
+        if (player.hand.handsFull) {
+            player.hand.currentHeldTurret.position = player.position.add(new Vector(0, -60));
+            player.hand.currentHeldTurret.draw(g2);
+        }
 
         //UI
         userInterface.draw(g2);

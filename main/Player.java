@@ -18,7 +18,7 @@ public class Player extends HealthEntity {
     public class Hand {
 
         boolean handsFull = false;
-        private Turret currentHeldTurret;
+        public Turret currentHeldTurret;
 
         /**places currently held turret at position. */
         public void placeTurret(Vector position) {
