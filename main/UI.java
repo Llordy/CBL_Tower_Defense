@@ -13,6 +13,7 @@ public class UI {
     Font fontArialPlain;
     Entity menuImage = new Entity();
     Entity healthBarFrame = new Entity();
+    Entity healthBarPlate = new Entity();
 
     /**Constructor to include the gamePanel for g2 and screen size variations. */
     public UI(GamePanel parameterGamePanel) {
@@ -33,12 +34,20 @@ public class UI {
                 200,
                 30
             );
+            healthBarPlate.setBufferedImage(
+                "/main/Images/healthbarplate.png",
+                200,
+                30
+            );
         } catch (IOException e) {
             System.out.println("couldnt render image error UI/MENUIMAGE");
         }
 
         menuImage.position = gamePanel.screenCenter;
         healthBarFrame.position = new Vector(
+            450,
+            50);
+        healthBarPlate.position = new Vector(
             450,
             50);
 
@@ -69,8 +78,6 @@ public class UI {
     /**Draws UI for playState gameState. */
     public void drawPlayScreen() {
 
-        //TODO: DRAW UI FOR PLAYSTATE INCLUDING WAVE COUNTER AND PLAYER HEALTH
-
         //DRAW WAVE COUNTER
         String waveCounterText = "Wave: " + gamePanel.waveHandler.waveCounter;
 
@@ -78,9 +85,13 @@ public class UI {
 
 
         //DRAW PLAYER HEALTH
+        healthBarPlate.draw(g2);
         setHealthColor(gamePanel.player.health);
-        g2.fillRect(355,
-            40, (190 * gamePanel.player.health / 100), 20);
+        g2.fillRect(
+            355,
+            40,
+            190 * gamePanel.player.health / 100,
+            20);
         healthBarFrame.draw(g2);
 
 
