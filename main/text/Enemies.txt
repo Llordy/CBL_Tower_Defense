@@ -1,0 +1,2 @@
+grunt /main/Images/enemy.png 30 30 30 100
+10 30 1

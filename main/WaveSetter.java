@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-
 import main.WaveHandler.Wave;
 
 public class WaveSetter {
@@ -32,7 +31,7 @@ public class WaveSetter {
                     enemyStringArray[1],
                     Integer.valueOf(enemyStringArray[2]),
                     Integer.valueOf(enemyStringArray[3]),
-                    Integer.valueOf(enemyStringArray[4]),
+                    Double.valueOf(enemyStringArray[4]),
                     Integer.valueOf(enemyStringArray[5]),
                     new Attack(
                         Integer.valueOf(attackStringArray[0]),
@@ -47,19 +46,22 @@ public class WaveSetter {
 
             bufferedReader.close();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("readEnemies" + e);
+
+            for (int i = 0; i < e.getStackTrace().length; i++) {
+                System.out.println(e.getStackTrace()[i]);
+            }
         }
 
         return enemyTypes;
     }
 
     /**reads the waves from Waves.txt */
-    public ArrayList<Wave> readWaves(BufferedReader bufferedReader, HashMap<String, Enemy> enemyTypes) {
+    public ArrayList<Wave> readWaves(BufferedReader bufferedReader, HashMap<String, Enemy> enemyTypes, WaveHandler waveHandler) {
 
         String waveString;
-        String[] waveStringArray;
-        String[] enemiesStringArray;
-        Wave[] waves;
+        String[] waveStringArray = null;
+        ArrayList<Wave> waves = new ArrayList<>();
 
         HashSet<Enemy> enemies = new HashSet<>();
 
@@ -75,37 +77,66 @@ public class WaveSetter {
                 int income = Integer.valueOf(waveStringArray[2]);
 
                 //read the list of enemies
-                for (int i = 0; i < Integer.valueOf(waveStringArray[1]); i++) {
-
-                    //read the enemy string and split it
-                    enemiesStringArray = bufferedReader.readLine().split(" ");
-
-                    //set variables for readability
-                    int amount = Integer.valueOf(enemiesStringArray[1]);
-                    String enemyType = enemiesStringArray[0];
-
-                    Enemy enemy = enemyTypes.get(enemyType);
-
-                    //paste enemy given amount of times into enemies
-                    for (int j = 0; j < amount; j++) {
-                        enemies.add(enemy);
-                    }
-                }
+                enemies = getEnemies(bufferedReader, waveStringArray, enemyTypes);
 
                 //construct the wave
-                Wave wave = new Wave(enemies, income);
+                Wave wave = waveHandler.new Wave(enemies, income);
 
                 //add the enemy and key to the hashmap
-                waves[waveNumber] = wave;
+                waves.add(waveNumber, wave);
 
                 waveNumber++;
             }
 
+            
+
             bufferedReader.close();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("readWaves " + e);
+
+            for (int i = 0; i < e.getStackTrace().length; i++) {
+                System.out.println(e.getStackTrace()[i]);
+            }
         }
 
         return waves;
+    }
+
+    private HashSet<Enemy> getEnemies(BufferedReader bufferedReader, String[] waveStringArray, HashMap<String, Enemy> enemyTypes) {
+
+        String[] enemiesStringArray;
+        HashSet<Enemy> outputEnemies = new HashSet<>();
+
+        try {
+
+            for (int i = 0; i < Integer.valueOf(waveStringArray[1]); i++) {
+
+                //read the enemy string and split it
+                enemiesStringArray = bufferedReader.readLine().split(" ");
+
+                //set variables for readability
+                int amount = Integer.valueOf(enemiesStringArray[1]);
+                String enemyType = enemiesStringArray[0];
+
+                Enemy enemy = enemyTypes.get(enemyType);
+
+                //paste enemy given amount of times into enemies
+                for (int j = 0; j < amount; j++) {
+                    outputEnemies.add(enemy.getCopy());
+                }
+
+                System.out.println(amount);
+            }
+            
+        } catch (Exception e) {
+            System.out.println("getEnemies" + e);
+
+            for (int i = 0; i < e.getStackTrace().length; i++) {
+                System.out.println(e.getStackTrace()[i]);
+            }
+        }
+
+        System.out.println(outputEnemies.size());
+        return outputEnemies;
     }
 }

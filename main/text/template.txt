@@ -1,0 +1,11 @@
+ENEMY:
+
+name imagePathName width height speed health
+damage range firedelay
+
+WAVE:
+
+wavenumber(no meaning, just readability) enemyTypeAmount income
+enemyType enemyAmount
+enemyType enemyAmount
+enemyType enemyAmount

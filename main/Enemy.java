@@ -79,6 +79,11 @@ public class Enemy extends HealthEntity {
         }
     }
 
+    public Enemy getCopy() {
+        Enemy newEnemy = new Enemy(imagePathName, width, height, speed, health, attack);
+        return newEnemy;
+    }
+    
     /**enemy dies. */
     public void die() {
         for (DeathListener listener : deathListeners) {
