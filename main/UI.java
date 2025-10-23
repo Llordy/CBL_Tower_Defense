@@ -12,6 +12,7 @@ public class UI {
     Graphics2D g2;
     Font fontArialPlain;
     Entity menuImage = new Entity();
+    Entity healthBarFrame = new Entity();
 
     /**Constructor to include the gamePanel for g2 and screen size variations. */
     public UI(GamePanel parameterGamePanel) {
@@ -27,10 +28,19 @@ public class UI {
                 gamePanel.screenWidth,
                 gamePanel.screenHeight
             );
+            healthBarFrame.setBufferedImage(
+                "/main/Images/healthbarframe.png",
+                gamePanel.screenWidth / 4,
+                gamePanel.screenHeight / 24
+            );
         } catch (IOException e) {
             System.out.println("couldnt render image error UI/MENUIMAGE");
         }
+
         menuImage.position = gamePanel.screenCenter;
+        healthBarFrame.position = new Vector(
+            gamePanel.screenWidth / 4 * 3,
+            50);
 
     }
 
@@ -60,9 +70,18 @@ public class UI {
     public void drawPlayScreen() {
 
         //TODO: DRAW UI FOR PLAYSTATE INCLUDING WAVE COUNTER AND PLAYER HEALTH
+
+        //DRAW WAVE COUNTER
         String waveCounterText = "Wave: " + gamePanel.waveHandler.waveCounter;
 
         g2.drawString(waveCounterText, 30, 50);
+
+
+        //DRAW PLAYER HEALTH
+        healthBarFrame.draw(g2);
+        drawPlayerHealth();
+        
+
     }
 
     /**Draws UI for pauseState gameState. */
@@ -71,13 +90,13 @@ public class UI {
         String text = "PAUSED";
         int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 
-
         g2.drawString(
             text, 
             Math.round(gamePanel.screenCenter.x - textWidth / 2),
             Math.round(gamePanel.screenCenter.y)
         );
     }
+
 
     /**Draws UI for menuState gameState. */
     public void drawMenuScreen() {
@@ -90,8 +109,8 @@ public class UI {
                              Math.round(gamePanel.screenCenter.y));
     }
 
+
     /**Draws UI for endScreen gameState or in other words, when player dies. */
-    //TODO: CREATE DEATH SCREEN FOR PLAYER
     public void drawEndScreen() {
         String text = "You died! Game Over";
         int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
@@ -99,5 +118,11 @@ public class UI {
         menuImage.draw(this.g2);
         g2.drawString(text, Math.round(gamePanel.screenCenter.x - textWidth / 2),
                              Math.round(gamePanel.screenCenter.y));
+    }
+
+    public void drawPlayerHealth() {
+        g2.setColor(Color.GREEN);
+        g2.fillRect(gamePanel.screenWidth / 4 * 3,
+            50, 100, 50);
     }
 }
