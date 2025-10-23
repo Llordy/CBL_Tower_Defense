@@ -1,2 +1,5 @@
-grunt /main/Images/enemy.png 30 30 30 100
+bob /main/Images/bob.png 10 10 30 10
+1 10 1
+
+grunt /main/Images/grunt.png 30 30 30 100
 10 30 1

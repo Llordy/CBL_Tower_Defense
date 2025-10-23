@@ -10,6 +10,8 @@ public class WaveSetter {
 
     /**read the enemies from Enemies.txt */
     public HashMap<String, Enemy> readEnemies(BufferedReader bufferedReader) {
+
+        String[] imagePaths = new String[] {};
         
         String enemyString;
         String[] enemyStringArray;
@@ -42,15 +44,13 @@ public class WaveSetter {
 
                 //add the enemy and key to the hashmap
                 enemyTypes.put(enemyStringArray[0], enemy);
+                bufferedReader.readLine();
             }
 
             bufferedReader.close();
         } catch (Exception e) {
-            System.out.println("readEnemies" + e);
-
-            for (int i = 0; i < e.getStackTrace().length; i++) {
-                System.out.println(e.getStackTrace()[i]);
-            }
+            System.out.println("readEnemies");
+            e.printStackTrace();
         }
 
         return enemyTypes;
@@ -86,17 +86,13 @@ public class WaveSetter {
                 waves.add(waveNumber, wave);
 
                 waveNumber++;
+                bufferedReader.readLine();
             }
-
             
-
             bufferedReader.close();
         } catch (Exception e) {
-            System.out.println("readWaves " + e);
-
-            for (int i = 0; i < e.getStackTrace().length; i++) {
-                System.out.println(e.getStackTrace()[i]);
-            }
+            System.out.println("readWaves");
+            e.printStackTrace();
         }
 
         return waves;
@@ -124,19 +120,13 @@ public class WaveSetter {
                 for (int j = 0; j < amount; j++) {
                     outputEnemies.add(enemy.getCopy());
                 }
-
-                System.out.println(amount);
             }
             
         } catch (Exception e) {
-            System.out.println("getEnemies" + e);
-
-            for (int i = 0; i < e.getStackTrace().length; i++) {
-                System.out.println(e.getStackTrace()[i]);
-            }
+            System.out.println("getEnemies");
+            e.printStackTrace();
         }
 
-        System.out.println(outputEnemies.size());
         return outputEnemies;
     }
 }
