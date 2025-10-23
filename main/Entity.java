@@ -18,11 +18,8 @@ public class Entity {
     public void setBufferedImage(String pathName, int width, int height) throws IOException {
 
         imagePathName = pathName;
-
-        System.out.println(pathName);
         
         this.image = ImageIO.read(getClass().getResourceAsStream(pathName));
-        
         setImageSize(width, height);
     }
 

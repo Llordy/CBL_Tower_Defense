@@ -15,13 +15,7 @@ public class Enemy extends HealthEntity {
         try {
             setBufferedImage(pathName, width, height);
         } catch (Exception e) {
-            System.out.println("Enemy " + e);
-            System.out.println(pathName);
-
-            for (int i = 0; i < e.getStackTrace().length; i++) {
-                System.out.println(e.getStackTrace()[i]);
-            }
-            System.out.println();
+            System.out.println("couldnt render image error ENEMY");
         }
         
         this.speed = speed;
