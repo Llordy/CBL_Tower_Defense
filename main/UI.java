@@ -30,8 +30,8 @@ public class UI {
             );
             healthBarFrame.setBufferedImage(
                 "/main/Images/healthbarframe.png",
-                gamePanel.screenWidth / 4,
-                gamePanel.screenHeight / 24
+                200,
+                30
             );
         } catch (IOException e) {
             System.out.println("couldnt render image error UI/MENUIMAGE");
@@ -39,7 +39,7 @@ public class UI {
 
         menuImage.position = gamePanel.screenCenter;
         healthBarFrame.position = new Vector(
-            gamePanel.screenWidth / 4 * 3,
+            450,
             50);
 
     }
@@ -78,9 +78,11 @@ public class UI {
 
 
         //DRAW PLAYER HEALTH
+        setHealthColor(gamePanel.player.health);
+        g2.fillRect(355,
+            40, (190 * gamePanel.player.health / 100), 20);
         healthBarFrame.draw(g2);
-        drawPlayerHealth();
-        
+
 
     }
 
@@ -120,9 +122,17 @@ public class UI {
                              Math.round(gamePanel.screenCenter.y));
     }
 
-    public void drawPlayerHealth() {
-        g2.setColor(Color.GREEN);
-        g2.fillRect(gamePanel.screenWidth / 4 * 3,
-            50, 100, 50);
+    /**Sets g2 color based on health amount. */
+    public void setHealthColor(int health) {
+
+        if (health < 25) {
+            g2.setColor(Color.red);
+        } else if (health < 50) {
+            g2.setColor(Color.orange);
+        } else if (health < 75) {
+            g2.setColor(Color.yellow);
+        } else {
+            g2.setColor(Color.green);
+        }
     }
 }
