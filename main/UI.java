@@ -101,6 +101,7 @@ public class UI {
 
         //DRAW Tip for picking up towers
         String pickTowerHintText = "Press [E] to buy turret";
+        g2.setColor(Color.white);
         g2.setFont(hintTextFont);
         gamePanel.armory.adjustPlayerIndex();
         if (!gamePanel.player.hand.handsFull) {
