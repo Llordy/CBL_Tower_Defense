@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import main.WaveHandler.Wave;
 
+/**reads the text files into storage. */
 public class TextReader {
 
     /**read the enemies from Enemies.txt */
-    public HashMap<String, Enemy> readEnemies(BufferedReader bufferedReader) {
+    public HashMap<String, Enemy> readEnemies(
+        BufferedReader bufferedReader
+    ) {
         
         String enemyString;
         String[] enemyStringArray;
@@ -53,9 +56,64 @@ public class TextReader {
         return enemyTypes;
     }
 
-    /**reads the waves from Waves.txt */
-    public ArrayList<Wave> readWaves(BufferedReader bufferedReader, HashMap<String, Enemy> enemyTypes, WaveHandler waveHandler) {
+    /**read the turrets from turrets.txt */
+    public HashMap<String, Turret> readTurrets(
+        BufferedReader bufferedReader
+    ) {
+        
+        String turretString;
+        String[] turretStringArray;
+        String[] attackStringArray;
+        Attack[] attacks;
+        HashMap<String, Turret> turretTypes = new HashMap<>();
 
+        try {
+            //read every turret
+            while ((turretString = bufferedReader.readLine()) != null) {
+
+                //split the turret string
+                turretStringArray = turretString.split(" ");
+
+                //read and split the attack strings
+                attacks = new Attack[Integer.valueOf(turretStringArray[5])];
+                for (int i = 0; i < Integer.valueOf(turretStringArray[5]); i++) {
+                    attackStringArray = bufferedReader.readLine().split(" ");
+                    attacks[i] = new Attack(
+                        Integer.valueOf(attackStringArray[0]), //damage
+                        Integer.valueOf(attackStringArray[1]), //range
+                        Integer.valueOf(attackStringArray[2]) //firedelay
+                    );
+                }
+
+                //construct the turret
+                Turret turret = new Turret(
+                    attacks,
+                    Integer.valueOf(turretStringArray[1]), //health
+                    Integer.valueOf(turretStringArray[2]), //cost
+                    Integer.valueOf(turretStringArray[3]), //width
+                    Integer.valueOf(turretStringArray[4]), //height
+                    new HashSet<HealthEntity>()
+                );
+
+                //add the turret and key to the hashmap
+                turretTypes.put(turretStringArray[0], turret);
+            }
+
+            bufferedReader.close();
+        } catch (Exception e) {
+            System.out.println("readTurrets");
+            e.printStackTrace();
+        }
+
+        return turretTypes;
+    }
+
+    /**reads the waves from Waves.txt */
+    public ArrayList<Wave> readWaves(
+        BufferedReader bufferedReader,
+        HashMap<String, Enemy> enemyTypes,
+        WaveHandler waveHandler
+    ) {
         String waveString;
         String[] waveStringArray = null;
         ArrayList<Wave> waves = new ArrayList<>();
@@ -96,8 +154,11 @@ public class TextReader {
         return waves;
     }
 
-    private HashSet<Enemy> getEnemies(BufferedReader bufferedReader, String[] waveStringArray, HashMap<String, Enemy> enemyTypes) {
-
+    private HashSet<Enemy> getEnemies(
+        BufferedReader bufferedReader,
+        String[] waveStringArray,
+        HashMap<String, Enemy> enemyTypes
+    ) {
         String[] enemiesStringArray;
         HashSet<Enemy> outputEnemies = new HashSet<>();
 

@@ -2,13 +2,16 @@ package main;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Set;
 
 /**armory at bottom of the screen. */
 public class Armory {
 
     final int height = 130;
-    private ArrayList<DisplayTurret> inventory = new ArrayList<>();
+    ArrayList<DisplayTurret> inventory = new ArrayList<>();
+    HashMap<String, Turret> turretTypes = new HashMap<>();
+    String[] keyStrings;
     Player player;
     GamePanel gamePanel;
 
@@ -17,6 +20,10 @@ public class Armory {
 
         this.player = player;
         this.gamePanel = gamePanel;
+        this.turretTypes = gamePanel.waveHandler.turretTypes;
+
+        Set<String> possibleTurretsSet = turretTypes.keySet();
+        keyStrings = possibleTurretsSet.toArray(new String[0]);
     }
 
     private class DisplayTurret extends Entity {
@@ -70,8 +77,15 @@ public class Armory {
     public void restock(int waveIndex) {
 
         for (int i = 0; i < Math.sqrt(waveIndex); i++) {
-            addJeb();
+            int turretIndex = (int) Math.round(Math.random() * (turretTypes.size() - 1));
+    
+            Turret newTurret = turretTypes.get(keyStrings[turretIndex]).getCopy();
+            DisplayTurret newDisplayTurret = new DisplayTurret(newTurret, newTurret.imagePathName);
+            addTurret(newDisplayTurret);
+
+            System.out.println(newTurret.attacks[0].range);
         }
+
     }
 
     /**have the player buy a turret. */
@@ -97,22 +111,6 @@ public class Armory {
         player.hand.grabTurret(turret);
 
         removeTurret(index);
-    }
-
-    /**semi-placeholder for a simple turret. */
-    public void addJeb() {
-        Turret jeb = new Turret(
-                new Attack[] {new Attack(40, 200, 1000)},
-                100,
-                3,
-                70,
-                70,
-                new HashSet<HealthEntity>(gamePanel.enemies)
-            );
-
-        DisplayTurret displayJeb = new DisplayTurret(jeb, jeb.imagePathName);
-            
-        addTurret(displayJeb);
     }
 
     /**draws the displayturrets on screen. */

@@ -16,9 +16,8 @@ public class WaveHandler {
     TextReader textReader = new TextReader();
 
     HashMap<String, Enemy> enemyTypes = new HashMap<>();
+    HashMap<String, Turret> turretTypes = new HashMap<>();
     ArrayList<Wave> waves = new ArrayList<>();
-
-    //TODO: implement different enemy types?
 
     /**the class describing a wave of enemies. */
     public class Wave {
@@ -51,13 +50,16 @@ public class WaveHandler {
             );
             waves = textReader.readWaves(bufferedReader, enemyTypes, this);
 
+            bufferedReader = new BufferedReader(
+                new FileReader("main\\text\\turrets.txt")
+            );
+            turretTypes = textReader.readTurrets(bufferedReader);
+
         } catch (Exception e) {
             System.out.println("WaveHandler ");
             e.printStackTrace();
         }
     }
-
-    
 
     /**spawns in enemies and starts the wave. */
     public HashSet<Enemy> startWave() {

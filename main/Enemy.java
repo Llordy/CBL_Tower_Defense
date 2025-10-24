@@ -11,7 +11,14 @@ public class Enemy extends HealthEntity {
     Attack attack;
 
     /**constructor. */
-    Enemy(String pathName, int width, int height, double speed, int health, Attack attack) {
+    Enemy(
+        String pathName,
+        int width,
+        int height,
+        double speed,
+        int health,
+        Attack attack
+    ) {
         try {
             setBufferedImage(pathName, width, height);
         } catch (Exception e) {
@@ -79,6 +86,7 @@ public class Enemy extends HealthEntity {
         }
     }
 
+    /**get a copy of this enemy. */
     public Enemy getCopy() {
         Enemy newEnemy = new Enemy(imagePathName, width, height, speed, health, attack);
         return newEnemy;

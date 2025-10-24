@@ -74,6 +74,12 @@ public class Turret extends HealthEntity {
         }
     }
 
+    /**get a copy of this turret. */
+    public Turret getCopy() {
+        Turret newTurret = new Turret(attacks, health, cost, width, height, targets);
+        return newTurret;
+    }
+
     /**updates every frame. */
     public void update(double delta, HashSet<HealthEntity> targets) {
         this.targets = targets;

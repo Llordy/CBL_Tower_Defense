@@ -3,7 +3,6 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.io.IOException;
 
 /**Handles and draws all User Interface and Overlay related content. */
 public class UI {
