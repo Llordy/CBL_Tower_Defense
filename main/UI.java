@@ -39,8 +39,10 @@ public class UI {
                 200,
                 30
             );
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("couldnt render image error UI/MENUIMAGE");
+            e.printStackTrace();
+            System.out.println(healthBarPlate.imagePathName);
         }
 
         menuImage.position = gamePanel.screenCenter;

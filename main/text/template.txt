@@ -1,7 +1,7 @@
 ENEMY:
 
 name imagePathName width height speed health
-damage range firedelay
+damage range firedelay(millis)
 
 WAVE:
 
@@ -13,5 +13,5 @@ enemyType enemyAmount
 TURRET:
 
 name health cost width height attackAmount
-damage range firedelay
-damage range firedelay
+damage range firedelay(millis)
+damage range firedelay(millis)
