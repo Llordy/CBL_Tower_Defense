@@ -14,6 +14,7 @@ public class Armory {
     String[] keyStrings;
     Player player;
     GamePanel gamePanel;
+    int playerIndex = -1; //-1 if player not in armory
 
     /**constructor. */
     Armory(Player player, GamePanel gamePanel) {
@@ -92,6 +93,20 @@ public class Armory {
         }
 
     }
+
+    public void adjustPlayerIndex(Vector playerPos) {
+        if (playerPos.y < gamePanel.screenHeight - height) {
+            playerIndex = -1;
+            return;
+        }
+
+        int x = (int) (long) Math.round(playerPos.x);
+        int screenWidth = gamePanel.screenWidth;
+        int chunkSize = screenWidth / inventory.size();
+        int playerIndex = (x - (x % chunkSize)) / chunkSize;
+    }
+
+
 
     /**have the player buy a turret. */
     public void buyTurret(double posX) {
