@@ -94,16 +94,21 @@ public class Armory {
 
     }
 
-    public void adjustPlayerIndex(Vector playerPos) {
-        if (playerPos.y < gamePanel.screenHeight - height) {
+    public void adjustPlayerIndex() {
+        if (player.position.y < gamePanel.screenHeight - height) {
+            playerIndex = -1;
+            return;
+        }
+        if (inventory.isEmpty()) {
             playerIndex = -1;
             return;
         }
 
-        int x = (int) (long) Math.round(playerPos.x);
+        int x = (int) (long) Math.round(player.position.x);
         int screenWidth = gamePanel.screenWidth;
         int chunkSize = screenWidth / inventory.size();
-        int playerIndex = (x - (x % chunkSize)) / chunkSize;
+
+        playerIndex = (x - (x % chunkSize)) / chunkSize;
     }
 
 

@@ -9,7 +9,8 @@ public class UI {
     
     GamePanel gamePanel;
     Graphics2D g2;
-    Font fontArialPlain;
+    Font headerTextFont;
+    Font hintTextFont;
     Entity menuImage = new Entity();
     Entity healthBarFrame = new Entity();
     Entity healthBarPlate = new Entity();
@@ -19,7 +20,9 @@ public class UI {
         this.gamePanel = parameterGamePanel;
 
         //FONTS
-        fontArialPlain = new Font("Arial", Font.BOLD, 50);
+        headerTextFont = new Font("Arial", Font.BOLD, 50);
+        hintTextFont = new Font("fontArialRounded", Font.PLAIN, 20);
+        
 
         //IMAGES
         try {
@@ -59,7 +62,7 @@ public class UI {
 
         this.g2 = g2;
 
-        g2.setFont(fontArialPlain);
+        g2.setFont(headerTextFont);
         g2.setColor(Color.white);
         
         if (gamePanel.gameState == gamePanel.playState) {
@@ -96,6 +99,20 @@ public class UI {
         healthBarFrame.draw(g2);
 
 
+        //DRAW Tip for picking up towers
+        String pickTowerHintText = "Press [E] to buy turret";
+        g2.setFont(hintTextFont);
+        gamePanel.armory.adjustPlayerIndex();
+        if (!gamePanel.player.hand.handsFull) {
+            if (gamePanel.armory.playerIndex != -1) {
+                g2.drawString(
+                    pickTowerHintText, 
+                    Math.round(gamePanel.player.position.x) + 30, 
+                    Math.round(gamePanel.player.position.y)
+                );
+            }
+        }
+        
     }
 
     /**Draws UI for pauseState gameState. */
