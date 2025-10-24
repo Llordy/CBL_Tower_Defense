@@ -16,7 +16,8 @@ public class Turret extends HealthEntity {
         int cost,
         int width,
         int height,
-        HashSet<HealthEntity> targets
+        HashSet<HealthEntity> targets,
+        String imagePathName
     ) {
         this.health = health;
         this.maxHealth = health;
@@ -25,9 +26,11 @@ public class Turret extends HealthEntity {
         this.targets = targets;
 
         try {
-            setBufferedImage("/main/Images/placeholderTurret.png", width, height);
+            setBufferedImage(imagePathName, width, height);
         } catch (Exception e) {
             System.out.println("couldnt render image error TURRET");
+            System.out.println(imagePathName);
+            e.printStackTrace();
         }
     }
 
@@ -76,7 +79,7 @@ public class Turret extends HealthEntity {
 
     /**get a copy of this turret. */
     public Turret getCopy() {
-        Turret newTurret = new Turret(attacks, health, cost, width, height, targets);
+        Turret newTurret = new Turret(attacks, health, cost, width, height, targets, imagePathName);
         return newTurret;
     }
 

@@ -119,8 +119,10 @@ public class UI {
         int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 
         menuImage.draw(this.g2);
-        g2.drawString(text, Math.round(gamePanel.screenCenter.x - textWidth / 2),
-                             Math.round(gamePanel.screenCenter.y));
+        g2.drawString(
+            text, Math.round(gamePanel.screenCenter.x - textWidth / 2),
+            Math.round(gamePanel.screenCenter.y)
+        );
     }
 
 
@@ -130,8 +132,10 @@ public class UI {
         int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 
         menuImage.draw(this.g2);
-        g2.drawString(text, Math.round(gamePanel.screenCenter.x - textWidth / 2),
-                             Math.round(gamePanel.screenCenter.y));
+        g2.drawString(
+            text, Math.round(gamePanel.screenCenter.x - textWidth / 2),
+            Math.round(gamePanel.screenCenter.y)
+        );
     }
 
     /**Sets g2 color based on health amount. */

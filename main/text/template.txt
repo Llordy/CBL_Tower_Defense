@@ -12,6 +12,6 @@ enemyType enemyAmount
 
 TURRET:
 
-name health cost width height attackAmount
+name health cost width height imagePathName attackAmount
 damage range firedelay(millis)
 damage range firedelay(millis)

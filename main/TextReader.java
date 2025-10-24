@@ -75,8 +75,8 @@ public class TextReader {
                 turretStringArray = turretString.split(" ");
 
                 //read and split the attack strings
-                attacks = new Attack[Integer.valueOf(turretStringArray[5])];
-                for (int i = 0; i < Integer.valueOf(turretStringArray[5]); i++) {
+                attacks = new Attack[Integer.valueOf(turretStringArray[6])];
+                for (int i = 0; i < Integer.valueOf(turretStringArray[6]); i++) {
                     attackStringArray = bufferedReader.readLine().split(" ");
                     attacks[i] = new Attack(
                         Integer.valueOf(attackStringArray[0]), //damage
@@ -92,7 +92,8 @@ public class TextReader {
                     Integer.valueOf(turretStringArray[2]), //cost
                     Integer.valueOf(turretStringArray[3]), //width
                     Integer.valueOf(turretStringArray[4]), //height
-                    new HashSet<HealthEntity>()
+                    new HashSet<HealthEntity>(),
+                    turretStringArray[5] //image path
                 );
 
                 //add the turret and key to the hashmap
@@ -182,11 +183,8 @@ public class TextReader {
             }
             
         } catch (Exception e) {
-            System.out.println("getEnemies" + e);
-
-            for (int i = 0; i < e.getStackTrace().length; i++) {
-                System.out.println(e.getStackTrace()[i]);
-            }
+            System.out.println("getEnemies");
+            e.printStackTrace();
         }
         return outputEnemies;
     }

@@ -76,14 +76,19 @@ public class Armory {
     /**ran every end of wave. */
     public void restock(int waveIndex) {
 
+        if (waveIndex == 0) {
+            Turret newTurret = turretTypes.get(keyStrings[0]).getCopy();
+            DisplayTurret newDisplayTurret = new DisplayTurret(newTurret, newTurret.imagePathName);
+            addTurret(newDisplayTurret);
+            return;
+        }
+
         for (int i = 0; i < Math.sqrt(waveIndex); i++) {
             int turretIndex = (int) Math.round(Math.random() * (turretTypes.size() - 1));
     
             Turret newTurret = turretTypes.get(keyStrings[turretIndex]).getCopy();
             DisplayTurret newDisplayTurret = new DisplayTurret(newTurret, newTurret.imagePathName);
             addTurret(newDisplayTurret);
-
-            System.out.println(newTurret.attacks[0].range);
         }
 
     }
