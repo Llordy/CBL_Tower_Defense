@@ -48,6 +48,7 @@ public class Attack {
     }
 
     private void animate(Vector origin, HealthEntity target) {
+        
         //TODO: add attack animation
     }
 }

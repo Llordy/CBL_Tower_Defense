@@ -129,7 +129,6 @@ public class UI {
         );
     }
 
-
     /**Draws UI for menuState gameState. */
     public void drawMenuScreen() {
 
@@ -142,7 +141,6 @@ public class UI {
             Math.round(gamePanel.screenCenter.y)
         );
     }
-
 
     /**Draws UI for endScreen gameState or in other words, when player dies. */
     public void drawEndScreen() {

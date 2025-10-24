@@ -111,8 +111,6 @@ public class Armory {
         playerIndex = (x - (x % chunkSize)) / chunkSize;
     }
 
-
-
     /**have the player buy a turret. */
     public void buyTurret(double posX) {
 

@@ -92,9 +92,7 @@ public class GamePanel extends JPanel
         gameThread.start();
     }
 
-    /**
-     * runs once on startup.
-     */
+    /**runs once on startup. */
     public void startupCode() {
         player.addDeathListener(this);
         player.armoryY = screenHeight - armory.height;
