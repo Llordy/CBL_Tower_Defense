@@ -3,3 +3,6 @@ wave1 1 3
 grunt 3
 wave2 1 4
 bob 10
+wave3 2 5
+grunt 10
+bob 20

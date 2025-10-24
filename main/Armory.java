@@ -76,8 +76,8 @@ public class Armory {
     /**ran every end of wave. */
     public void restock(int waveIndex) {
 
-        if (waveIndex == 0) {
-            Turret newTurret = turretTypes.get(keyStrings[0]).getCopy();
+        if (waveIndex == 1) {
+            Turret newTurret = turretTypes.get("basic").getCopy();
             DisplayTurret newDisplayTurret = new DisplayTurret(newTurret, newTurret.imagePathName);
             addTurret(newDisplayTurret);
             return;

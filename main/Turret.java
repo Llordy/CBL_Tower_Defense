@@ -67,13 +67,15 @@ public class Turret extends HealthEntity {
 
             target = getTarget(attack, targets);
 
+            if (target == null) {
+                continue;
+            }
+
             if (attack.range < this.distanceTo(target)) {
                 continue;
             }
 
             attack.perform(position, target);
-            
-            //TODO: fix targeting and gather targets
         }
     }
 
@@ -86,7 +88,10 @@ public class Turret extends HealthEntity {
     /**updates every frame. */
     public void update(double delta, HashSet<HealthEntity> targets) {
         this.targets = targets;
-        attack();
+
+        if (targets != null) {
+            attack();
+        }
     }
 
     @Override

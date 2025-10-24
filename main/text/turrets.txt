@@ -1,4 +1,4 @@
-simple 200 3 50 50 /main/Images/turrets/placeholderTurret.png 1
+basic 200 3 50 50 /main/Images/turrets/placeholderTurret.png 1
 40 300 1000
 sniper 50 5 40 40 /main/Images/turrets/sniper.png 1
 100 1000 2000
