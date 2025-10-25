@@ -4,16 +4,21 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import main.Armory.DisplayTurret;
+
 /**Handles and draws all User Interface and Overlay related content. */
 public class UI {
     
     GamePanel gamePanel;
     Graphics2D g2;
     Font headerTextFont;
-    Font hintTextFont;
+    Font mediumTextFont;
+    Font smallTextFont;
     Entity menuImage = new Entity();
     Entity healthBarFrame = new Entity();
     Entity healthBarPlate = new Entity();
+
+    String pickTowerHintText = "Press [E] to buy turret";
 
     /**Constructor to include the gamePanel for g2 and screen size variations. */
     public UI(GamePanel parameterGamePanel) {
@@ -21,7 +26,8 @@ public class UI {
 
         //FONTS
         headerTextFont = new Font("Arial", Font.BOLD, 50);
-        hintTextFont = new Font("ArialRoundedMTBold", Font.BOLD, 20);
+        mediumTextFont = new Font("fontArialRounded", Font.PLAIN, 20);
+        smallTextFont = new Font("fontArialRounded", Font.PLAIN, 10);
         
 
         //IMAGES
@@ -84,9 +90,12 @@ public class UI {
 
         //DRAW WAVE COUNTER
         String waveCounterText = "Wave: " + gamePanel.waveHandler.waveCounter;
-
         g2.drawString(waveCounterText, 30, 50);
 
+        //DRAW MONEY COUNTER
+        String moneyCounterText = "Money: " + gamePanel.player.money;
+        g2.setFont(mediumTextFont);
+        g2.drawString(moneyCounterText, 10, 80);
 
         //DRAW PLAYER HEALTH
         healthBarPlate.draw(g2);
@@ -98,22 +107,44 @@ public class UI {
             20);
         healthBarFrame.draw(g2);
 
-
         //DRAW Tip for picking up towers
-        String pickTowerHintText = "Press [E] to buy turret";
         g2.setColor(Color.white);
-        g2.setFont(hintTextFont);
+        g2.setFont(smallTextFont);
         gamePanel.armory.adjustPlayerIndex();
+
         if (!gamePanel.player.hand.handsFull) {
+
             if (gamePanel.armory.playerIndex != -1) {
-                g2.drawString(
-                    pickTowerHintText, 
-                    Math.round(gamePanel.player.position.x) + 30, 
-                    Math.round(gamePanel.player.position.y)
-                );
+                int index = gamePanel.armory.playerIndex;
+                DisplayTurret displayTurret = gamePanel.armory.inventory.get(index);
+
+                String[] turretInfoStrings = new String[] {
+                    pickTowerHintText,
+                    "cost: " + displayTurret.turret.cost,
+                    "health: " + displayTurret.turret.health,
+                    "damage: " + displayTurret.turret.attacks[0].damage * displayTurret.turret.attacks.length,
+                    "range: " + displayTurret.turret.attacks[0].range,
+                    "shots per second: " + Math.round(1.0d / displayTurret.turret.attacks[0].fireDelay)
+                };
+
+                long x = Math.round(displayTurret.position.x);
+                long y = Math.round(displayTurret.position.y);
+
+                int offsetX = 30;
+                int offsetY = -40;
+
+                for (int i = 0; i < turretInfoStrings.length; i++) {
+                    
+                    g2.drawString(
+                    turretInfoStrings[i],
+                    x + offsetX,
+                    y + offsetY
+                    );
+
+                    offsetY += 10;
+                }
             }
         }
-        
     }
 
     /**Draws UI for pauseState gameState. */
