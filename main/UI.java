@@ -21,7 +21,7 @@ public class UI {
 
         //FONTS
         headerTextFont = new Font("Arial", Font.BOLD, 50);
-        hintTextFont = new Font("fontArialRounded", Font.PLAIN, 20);
+        hintTextFont = new Font("ArialRoundedMTBold", Font.BOLD, 20);
         
 
         //IMAGES
