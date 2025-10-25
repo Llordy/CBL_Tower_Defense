@@ -28,6 +28,7 @@ public class Enemy extends HealthEntity {
         this.speed = speed;
         this.attack = attack;
         this.health = health;
+        this.maxHealth = health;
     }
 
     /**returns the priority target.
