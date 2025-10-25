@@ -110,6 +110,20 @@ public class Armory {
         playerIndex = (x - (x % chunkSize)) / chunkSize;
     }
 
+    /**adjusts playerIndex */
+    public void adjustPlayerIndex(int inventorySize, int x, int y) {
+        if (y < gamePanel.screenHeight - height) {
+            playerIndex = -1;
+            return;
+        }
+
+        int screenWidth = gamePanel.screenWidth;
+        int chunkSize = screenWidth / inventorySize;
+        int index = (x - (x % chunkSize)) / chunkSize;
+
+        playerIndex = index;
+    }
+
     /**have the player buy a turret. */
     public void buyTurret(double posX) {
         if (inventory.size() == 0 || player.hand.handsFull) {
