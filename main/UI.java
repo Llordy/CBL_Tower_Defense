@@ -18,8 +18,6 @@ public class UI {
     Entity healthBarFrame = new Entity();
     Entity healthBarPlate = new Entity();
 
-    String pickTowerHintText = "Press [E] to buy turret";
-
     /**Constructor to include the gamePanel for g2 and screen size variations. */
     public UI(GamePanel parameterGamePanel) {
         this.gamePanel = parameterGamePanel;
@@ -117,6 +115,7 @@ public class UI {
             if (gamePanel.armory.playerIndex != -1) {
                 int index = gamePanel.armory.playerIndex;
                 DisplayTurret displayTurret = gamePanel.armory.inventory.get(index);
+                String pickTowerHintText = "Press [E] to buy turret";
 
                 String[] turretInfoStrings = new String[] {
                     pickTowerHintText,
