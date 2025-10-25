@@ -3,7 +3,7 @@ package main;
 /** the player, should only be 1 of. */
 public class Player extends HealthEntity {
 
-    int money = 10;
+    int money = 0;
     double speed;
     KeyHandler keyHandler;
     Hand hand = new Hand();
