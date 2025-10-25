@@ -109,7 +109,7 @@ public class UI {
 
         //DRAW PLAYER HEALTH
         healthBarPlate.draw(g2);
-        setHealthColor(gamePanel.player.health);
+        setHealthColor(gamePanel.player.health, 100);
         g2.fillRect(
             355,
             40,
@@ -119,7 +119,7 @@ public class UI {
 
         //DRAW ENEMY HEALTH BARS
         for (Enemy enemy : gamePanel.enemies) {
-            setHealthColor(enemy.health);
+            setHealthColor(enemy.health, enemy.maxHealth);
             g2.fillRect(
                 (int) (enemy.position.x) - enemy.width / 2,
                 (int) (enemy.position.y) - enemy.height / 2 - 8,
@@ -216,13 +216,13 @@ public class UI {
     }
 
     /**Sets g2 color based on health amount. */
-    public void setHealthColor(int health) {
+    public void setHealthColor(int health, int maxhealth) {
 
-        if (health < 25) {
+        if (health < maxhealth * 25 / 100) {
             g2.setColor(Color.red);
-        } else if (health < 50) {
+        } else if (health < maxhealth * 50 / 100) {
             g2.setColor(Color.orange);
-        } else if (health < 75) {
+        } else if (health < maxhealth * 75 / 100) {
             g2.setColor(Color.yellow);
         } else {
             g2.setColor(Color.green);
