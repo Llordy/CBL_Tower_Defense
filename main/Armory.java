@@ -56,6 +56,8 @@ public class Armory {
 
         //set Y of position
         newDisplayTurret.position.y = gamePanel.screenHeight - height * 0.5;
+
+        adjustPlayerIndex();
     }
 
     private void removeTurret(int index) {
@@ -104,24 +106,14 @@ public class Armory {
         }
 
         int x = (int) (long) Math.round(player.position.x);
+        if (x == gamePanel.screenWidth) {
+            playerIndex = inventory.size() - 1;
+            return;
+        }
         int screenWidth = gamePanel.screenWidth;
         int chunkSize = screenWidth / inventory.size();
 
         playerIndex = (x - (x % chunkSize)) / chunkSize;
-    }
-
-    /**adjusts playerIndex */
-    public void adjustPlayerIndex(int inventorySize, int x, int y) {
-        if (y < gamePanel.screenHeight - height) {
-            playerIndex = -1;
-            return;
-        }
-
-        int screenWidth = gamePanel.screenWidth;
-        int chunkSize = screenWidth / inventorySize;
-        int index = (x - (x % chunkSize)) / chunkSize;
-
-        playerIndex = index;
     }
 
     /**have the player buy a turret. */
@@ -146,6 +138,8 @@ public class Armory {
         player.hand.grabTurret(turret);
 
         removeTurret(index);
+
+        adjustPlayerIndex();
     }
 
     /**draws the displayturrets on screen. */
