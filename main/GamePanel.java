@@ -185,6 +185,7 @@ public class GamePanel extends JPanel
 
         //Armory
         armory.draw(g2);
+        armory.checkForDisplayTurretCollision();
 
         //Player
         player.draw(g2);

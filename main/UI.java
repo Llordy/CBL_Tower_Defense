@@ -105,7 +105,7 @@ public class UI {
         g2.setFont(hintTextFont);
         gamePanel.armory.adjustPlayerIndex();
         if (!gamePanel.player.hand.handsFull) {
-            if (gamePanel.armory.playerIndex != -1) {
+            if (gamePanel.armory.turretHovered != null) {
                 g2.drawString(
                     pickTowerHintText, 
                     Math.round(gamePanel.player.position.x) + 30, 

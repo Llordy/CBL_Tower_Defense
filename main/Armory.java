@@ -15,6 +15,8 @@ public class Armory {
     Player player;
     GamePanel gamePanel;
     int playerIndex = -1; //-1 if player not in armory
+    Turret turretHovered = null;
+    
 
     /**constructor. */
     Armory(Player player, GamePanel gamePanel) {
@@ -61,7 +63,7 @@ public class Armory {
     private void removeTurret(int index) {
         inventory.remove(index);
 
-        if (inventory.size() == 0) {
+        if (inventory.isEmpty()) {
             return;
         }
 
@@ -114,7 +116,7 @@ public class Armory {
     /**have the player buy a turret. */
     public void buyTurret(double posX) {
 
-        if (inventory.size() == 0 || player.hand.handsFull) {
+        if (inventory.isEmpty() || player.hand.handsFull) {
             return;
         }
 
@@ -124,7 +126,10 @@ public class Armory {
         int chunkSize = screenWidth / inventory.size();
         int index = (x - (x % chunkSize)) / chunkSize;
 
-        Turret turret = inventory.get(index).turret;
+        Turret turret = turretHovered;
+        if (turret == null) {
+            return;
+        }
 
         if (player.money < turret.cost) {
             return;
@@ -143,4 +148,22 @@ public class Armory {
             displayTurret.draw(g2);
         }
     }
+
+    /**Check for player to be colliding with a display turret for possible functions like buying
+    * turret or showing keybind hints.*/
+    public void checkForDisplayTurretCollision() {
+
+        for (DisplayTurret displayTurret : inventory) {
+
+            if (player.position.x < (displayTurret.position.x + displayTurret.width / 2) 
+                && player.position.x > (displayTurret.position.x - displayTurret.width / 2)
+                && player.position.y < (displayTurret.position.y + displayTurret.height / 2) 
+                && player.position.y > (displayTurret.position.y - displayTurret.height / 2)) {
+                turretHovered = displayTurret.turret;
+                return;
+            }
+        }
+        turretHovered = null;
+    }
+
 }
