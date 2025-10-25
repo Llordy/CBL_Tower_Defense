@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.HashSet;
 
 /**class describing all turrets. */
@@ -8,6 +10,8 @@ public class Turret extends HealthEntity {
     int cost;
     Attack[] attacks;
     HashSet<HealthEntity> targets;
+    boolean canDrawAttack = false;
+    Vector drawTargetPos;
 
     /**constructor. */
     Turret(
@@ -75,7 +79,10 @@ public class Turret extends HealthEntity {
                 continue;
             }
 
-            attack.perform(position, target);
+            if (attack.perform(this, target)) {
+                canDrawAttack = true;
+                drawTargetPos = target.position;
+            }
         }
     }
 
@@ -106,5 +113,16 @@ public class Turret extends HealthEntity {
     @Override
     void addDeathListener(DeathListener toAdd) {
         deathListeners.add(toAdd);
+    }
+
+    @Override
+    void draw(Graphics2D g2) {
+        super.draw(g2);
+
+        if (canDrawAttack) {
+            g2.setColor(Color.ORANGE);
+            g2.drawLine((int) position.x, (int) position.y, (int) drawTargetPos.x, (int) drawTargetPos.y);
+            canDrawAttack = false;
+        }
     }
 }

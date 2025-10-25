@@ -21,19 +21,19 @@ public class Attack {
         this.fireDelay = fireDelay;
     }
 
-    /**performs the attack on the given target. */
-    public void perform(Vector origin, HealthEntity target) {
+    /**performs the attack on the given target.
+     * returns whether the attack got performed.
+     */
+    public boolean perform(HealthEntity origin, HealthEntity target) {
 
         if (target == null) {
-            return;
+            return false;
         }
 
         if (!onCooldown) {
             
             target.damage(damage);
             onCooldown = true;
-
-            animate(origin, target);
 
             //cooldown timer
             ActionListener taskPerformer = new ActionListener() {
@@ -44,11 +44,9 @@ public class Attack {
             Timer timer = new Timer(fireDelay, taskPerformer);
             timer.setRepeats(false);
             timer.start();
+            return true;
         }
-    }
-
-    private void animate(Vector origin, HealthEntity target) {
         
-        //TODO: add attack animation
+        return false;
     }
 }

@@ -64,7 +64,7 @@ public class Enemy extends HealthEntity {
 
         if (this.distanceTo(currentTarget) <= attack.range) {
 
-            attack.perform(position, currentTarget);
+            attack.perform(this, currentTarget);
         }
     }
 
