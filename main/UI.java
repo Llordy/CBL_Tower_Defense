@@ -27,7 +27,7 @@ public class UI {
         //FONTS
         headerTextFont = new Font("Arial", Font.BOLD, 50);
         mediumTextFont = new Font("fontArialRounded", Font.PLAIN, 20);
-        smallTextFont = new Font("fontArialRounded", Font.PLAIN, 10);
+        smallTextFont = new Font("fontArialRounded", Font.BOLD, 10);
         
 
         //IMAGES
@@ -118,13 +118,18 @@ public class UI {
                 int index = gamePanel.armory.playerIndex;
                 DisplayTurret displayTurret = gamePanel.armory.inventory.get(index);
 
+                String firerateString = String.valueOf(1000.0d / displayTurret.turret.attacks[0].fireDelay);
+                if (firerateString.length() > 5) {
+                    firerateString = firerateString.substring(0,5);
+                }
+
                 String[] turretInfoStrings = new String[] {
                     pickTowerHintText,
                     "cost: " + displayTurret.turret.cost,
                     "health: " + displayTurret.turret.health,
                     "damage: " + displayTurret.turret.attacks[0].damage * displayTurret.turret.attacks.length,
                     "range: " + displayTurret.turret.attacks[0].range,
-                    "shots per second: " + Math.round(1.0d / displayTurret.turret.attacks[0].fireDelay)
+                    "shots per second: " + firerateString
                 };
 
                 long x = Math.round(displayTurret.position.x);
