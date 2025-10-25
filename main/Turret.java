@@ -88,7 +88,12 @@ public class Turret extends HealthEntity {
 
     /**get a copy of this turret. */
     public Turret getCopy() {
-        Turret newTurret = new Turret(attacks, health, cost, width, height, targets, imagePathName);
+        Attack[] newAttacks = new Attack[attacks.length];
+        for (int i = 0; i < attacks.length; i++) {
+            newAttacks[i] = attacks[i].getCopy();
+        }
+        
+        Turret newTurret = new Turret(newAttacks, health, cost, width, height, targets, imagePathName);
         return newTurret;
     }
 

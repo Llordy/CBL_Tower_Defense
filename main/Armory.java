@@ -27,7 +27,7 @@ public class Armory {
         keyStrings = possibleTurretsSet.toArray(new String[0]);
     }
 
-    private class DisplayTurret extends Entity {
+    public class DisplayTurret extends Entity {
 
         Turret turret;
 
@@ -91,7 +91,6 @@ public class Armory {
             DisplayTurret newDisplayTurret = new DisplayTurret(newTurret, newTurret.imagePathName);
             addTurret(newDisplayTurret);
         }
-
     }
 
     public void adjustPlayerIndex() {
@@ -113,7 +112,6 @@ public class Armory {
 
     /**have the player buy a turret. */
     public void buyTurret(double posX) {
-
         if (inventory.size() == 0 || player.hand.handsFull) {
             return;
         }

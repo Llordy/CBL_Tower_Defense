@@ -8,8 +8,8 @@ import javax.swing.Timer;
 public class Attack {
 
     int damage;
-    double range;
-    private int fireDelay; //millis
+    int range;
+    int fireDelay; //millis
 
     boolean onCooldown = false;
 
@@ -48,5 +48,9 @@ public class Attack {
         }
         
         return false;
+    }
+
+    public Attack getCopy() {
+        return new Attack(damage, range, fireDelay);
     }
 }
