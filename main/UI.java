@@ -3,7 +3,6 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-
 import main.Armory.DisplayTurret;
 
 /**Handles and draws all User Interface and Overlay related content. */
@@ -17,6 +16,7 @@ public class UI {
     Entity menuImage = new Entity();
     Entity healthBarFrame = new Entity();
     Entity healthBarPlate = new Entity();
+    String endGameText;
 
     /**Constructor to include the gamePanel for g2 and screen size variations. */
     public UI(GamePanel parameterGamePanel) {
@@ -179,13 +179,15 @@ public class UI {
 
     /**Draws UI for endScreen gameState or in other words, when player dies. */
     public void drawEndScreen() {
-        
-        String text = "You died! Game Over";
-        int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-
+        if (gamePanel.player.health <= 0) {
+            endGameText = "You died! Game Over";
+        } else {
+            endGameText = "You win! Game Over";
+        }
+        int textWidth = (int) g2.getFontMetrics().getStringBounds(endGameText, g2).getWidth();
         menuImage.draw(this.g2);
         g2.drawString(
-            text, Math.round(gamePanel.screenCenter.x - textWidth / 2),
+            endGameText, Math.round(gamePanel.screenCenter.x - textWidth / 2),
             Math.round(gamePanel.screenCenter.y)
         );
     }
