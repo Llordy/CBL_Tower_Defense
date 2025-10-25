@@ -16,6 +16,8 @@ public class UI {
     Entity menuImage = new Entity();
     Entity healthBarFrame = new Entity();
     Entity healthBarPlate = new Entity();
+    Entity enemyHealthBarFrame = new Entity();
+    Entity enemyHealthBarPlate = new Entity();
     String endGameText;
 
     /**Constructor to include the gamePanel for g2 and screen size variations. */
@@ -44,6 +46,16 @@ public class UI {
                 "/main/Images/healthbarplate.png",
                 200,
                 30
+            );
+            enemyHealthBarFrame.setBufferedImage(
+                "/main/Images/healthbarframe.png",
+                30,
+                10
+            );
+            enemyHealthBarPlate.setBufferedImage(
+                "/main/Images/healthbarplate.png",
+                30,
+                10
             );
         } catch (Exception e) {
             System.out.println("couldnt render image error UI/MENUIMAGE");
@@ -104,6 +116,17 @@ public class UI {
             190 * gamePanel.player.health / 100,
             20);
         healthBarFrame.draw(g2);
+
+        //DRAW ENEMY HEALTH BARS
+        for (Enemy enemy : gamePanel.enemies) {
+            setHealthColor(enemy.health);
+            g2.fillRect(
+                (int) (enemy.position.x) - enemy.width / 2,
+                (int) (enemy.position.y) - enemy.height / 2 - 8,
+                enemy.width,
+                5);
+            
+        }
 
         //DRAW Tip for picking up towers
         g2.setColor(Color.white);
