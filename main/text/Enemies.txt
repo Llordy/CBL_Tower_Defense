@@ -1,4 +1,6 @@
 grunt /main/Images/grunt.png 30 30 30 100
 10 30 1000
-bob /main/Images/bob.png 10 10 30 10
+bob /main/Images/bob.png 10 10 40 10
 1 10 1000
+heavy /main/Images/heavy.png 50 50 15 1000
+50 50 3000

@@ -6,3 +6,21 @@ bob 10
 wave3 2 5
 grunt 10
 bob 20
+wave4 2 5
+grunt 20
+heavy 1
+wave5 1 5
+bob 50
+wave6 2 5
+heavy 5
+bob 30
+wave7 1 5
+grunt 40
+wave8 1 5
+bob 100
+wave9 1 5
+heavy 10
+wave10 3 5
+heavy 10
+grunt 20
+bob 100

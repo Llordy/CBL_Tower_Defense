@@ -134,7 +134,7 @@ public class UI {
                 long x = Math.round(displayTurret.position.x);
                 long y = Math.round(displayTurret.position.y);
 
-                int offsetX = 30;
+                int offsetX = -50;
                 int offsetY = -40;
 
                 for (int i = 0; i < turretInfoStrings.length; i++) {
@@ -179,6 +179,7 @@ public class UI {
 
     /**Draws UI for endScreen gameState or in other words, when player dies. */
     public void drawEndScreen() {
+        
         String text = "You died! Game Over";
         int textWidth = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 
