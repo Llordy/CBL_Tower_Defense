@@ -70,16 +70,10 @@ public class Enemy extends HealthEntity {
     }
 
     /**moves the enemy towards the given entity. 
-     * TODO: collisions
     */
     public void moveTowards(Entity target, double delta) {
 
-        if (distanceTo(target)  <= attack.range) {
-
-            //TODO: go into target until collision
-
-        } else {
-
+        if (distanceTo(target)  > attack.range) {
             //moves towards the target, not checking collisions
             Vector deltaPos = target.position.subtract(this.position);
             deltaPos = deltaPos.divide((float) deltaPos.length());
@@ -94,6 +88,7 @@ public class Enemy extends HealthEntity {
     }
     
     /**enemy dies. */
+    @Override
     public void die() {
         for (DeathListener listener : deathListeners) {
             listener.entityDied("Enemy", this);

@@ -141,7 +141,7 @@ public class GamePanel extends JPanel
             player.update(delta);
 
             //ENEMIES
-            if (enemies.size() == 0) {
+            if (enemies.isEmpty()) {
                 enemies.addAll(waveHandler.startWave());
                 armory.restock(waveHandler.waveCounter);
             }

@@ -58,7 +58,6 @@ public class Turret extends HealthEntity {
 
     private double getHeat(HealthEntity target) {
         return 100 / distanceTo(target);
-        //TODO: calculate the heat
     }
 
 
@@ -93,7 +92,15 @@ public class Turret extends HealthEntity {
             newAttacks[i] = attacks[i].getCopy();
         }
         
-        Turret newTurret = new Turret(newAttacks, health, cost, width, height, targets, imagePathName);
+        Turret newTurret = new Turret(
+            newAttacks,
+            health, 
+            cost, 
+            width, 
+            height, 
+            targets, 
+            imagePathName
+            );
         return newTurret;
     }
 
@@ -108,7 +115,6 @@ public class Turret extends HealthEntity {
 
     @Override
     void die() {
-        // TODO turret go kaboom
         
         for (DeathListener listener : deathListeners) {
             listener.entityDied("Turret", this);
@@ -126,7 +132,11 @@ public class Turret extends HealthEntity {
 
         if (canDrawAttack) {
             g2.setColor(Color.ORANGE);
-            g2.drawLine((int) position.x, (int) position.y, (int) drawTargetPos.x, (int) drawTargetPos.y);
+            g2.drawLine(
+                (int) position.x, 
+                (int) position.y, 
+                (int) drawTargetPos.x, 
+                (int) drawTargetPos.y);
             canDrawAttack = false;
         }
     }

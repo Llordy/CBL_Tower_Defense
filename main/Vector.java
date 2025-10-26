@@ -1,6 +1,6 @@
 package main;
 
-/**do you not get the point?. */
+/**Helper class to have vectors of entity positions. */
 public class Vector {
     double x;
     double y;

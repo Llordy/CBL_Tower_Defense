@@ -27,10 +27,13 @@ public class Armory {
         keyStrings = possibleTurretsSet.toArray(new String[0]);
     }
 
+    /**Separate Class for turrets that can be bough but are not currently in use 
+     nd cannot be targetted by enemies.*/
     public class DisplayTurret extends Entity {
 
         Turret turret;
 
+        /**Constructor. */
         DisplayTurret(Turret turret, String imagePathName) {
 
             this.turret = turret;
@@ -63,7 +66,7 @@ public class Armory {
     private void removeTurret(int index) {
         inventory.remove(index);
 
-        if (inventory.size() == 0) {
+        if (inventory.isEmpty()) {
             return;
         }
 
@@ -95,6 +98,7 @@ public class Armory {
         }
     }
 
+    /**Decides which display turret is closest for showing stats and hints to buy. */
     public void adjustPlayerIndex() {
         if (player.position.y < gamePanel.screenHeight - height) {
             playerIndex = -1;
@@ -118,7 +122,7 @@ public class Armory {
 
     /**have the player buy a turret. */
     public void buyTurret(double posX) {
-        if (inventory.size() == 0 || player.hand.handsFull) {
+        if (inventory.isEmpty() || player.hand.handsFull) {
             return;
         }
 

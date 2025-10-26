@@ -67,8 +67,7 @@ public class WaveHandler {
         waveCounter++;
         if (waveCounter >= waves.size()) {
 
-            //TODO: win the game
-            gamePanel.gameState = 3; //endstate
+            gamePanel.gameState = gamePanel.endState;
             return new HashSet<>();
         }
         currentWave = waves.get(waveCounter);

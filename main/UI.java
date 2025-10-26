@@ -140,16 +140,21 @@ public class UI {
                 DisplayTurret displayTurret = gamePanel.armory.inventory.get(index);
                 String pickTowerHintText = "Press [E] to buy turret";
 
-                String firerateString = String.valueOf(1000.0d / displayTurret.turret.attacks[0].fireDelay);
+                String firerateString = String.valueOf(
+                    1000.0d 
+                    / 
+                    displayTurret.turret.attacks[0].fireDelay
+                 );
                 if (firerateString.length() > 5) {
-                    firerateString = firerateString.substring(0,5);
+                    firerateString = firerateString.substring(0, 5);
                 }
 
                 String[] turretInfoStrings = new String[] {
                     pickTowerHintText,
                     "cost: " + displayTurret.turret.cost,
                     "health: " + displayTurret.turret.health,
-                    "damage: " + displayTurret.turret.attacks[0].damage * displayTurret.turret.attacks.length,
+                    "damage: " + displayTurret.turret.attacks[0].damage
+                        * displayTurret.turret.attacks.length,
                     "range: " + displayTurret.turret.attacks[0].range,
                     "shots per second: " + firerateString
                 };
@@ -163,9 +168,9 @@ public class UI {
                 for (int i = 0; i < turretInfoStrings.length; i++) {
                     
                     g2.drawString(
-                    turretInfoStrings[i],
-                    x + offsetX,
-                    y + offsetY
+                        turretInfoStrings[i],
+                        x + offsetX,
+                        y + offsetY
                     );
 
                     offsetY += 10;
