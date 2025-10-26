@@ -73,7 +73,7 @@ public class Enemy extends HealthEntity {
     */
     public void moveTowards(Entity target, double delta) {
 
-        if (distanceTo(target)  > attack.range) {
+        if (distanceTo(target) > attack.range) {
             //moves towards the target, not checking collisions
             Vector deltaPos = target.position.subtract(this.position);
             deltaPos = deltaPos.divide((float) deltaPos.length());

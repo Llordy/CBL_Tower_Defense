@@ -1,6 +1,6 @@
 package main;
 
-/**Helper class to have vectors of entity positions. */
+/**class to represent positions and 2D translations. */
 public class Vector {
     double x;
     double y;

@@ -27,8 +27,9 @@ public class Armory {
         keyStrings = possibleTurretsSet.toArray(new String[0]);
     }
 
-    /**Separate Class for turrets that can be bough but are not currently in use 
-     nd cannot be targetted by enemies.*/
+    /**Separate Class for turrets that are on display in the armory, but are not active yet.
+     * (still have to be bought)
+    */
     public class DisplayTurret extends Entity {
 
         Turret turret;
@@ -98,7 +99,7 @@ public class Armory {
         }
     }
 
-    /**Decides which display turret is closest for showing stats and hints to buy. */
+    /**Decides which displayTurret is closest for showing stats and hints to buy. */
     public void adjustPlayerIndex() {
         if (player.position.y < gamePanel.screenHeight - height) {
             playerIndex = -1;

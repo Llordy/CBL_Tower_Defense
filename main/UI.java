@@ -114,7 +114,8 @@ public class UI {
             355,
             40,
             190 * gamePanel.player.health / 100,
-            20);
+            20
+        );
         healthBarFrame.draw(g2);
 
         //DRAW ENEMY HEALTH BARS
@@ -124,7 +125,8 @@ public class UI {
                 (int) (enemy.position.x) - enemy.width / 2,
                 (int) (enemy.position.y) - enemy.height / 2 - 8,
                 enemy.width,
-                5);
+                5
+            );
             
         }
 
@@ -140,11 +142,7 @@ public class UI {
                 DisplayTurret displayTurret = gamePanel.armory.inventory.get(index);
                 String pickTowerHintText = "Press [E] to buy turret";
 
-                String firerateString = String.valueOf(
-                    1000.0d 
-                    / 
-                    displayTurret.turret.attacks[0].fireDelay
-                 );
+                String firerateString = String.valueOf(1000.0d / displayTurret.turret.attacks[0].fireDelay);
                 if (firerateString.length() > 5) {
                     firerateString = firerateString.substring(0, 5);
                 }
